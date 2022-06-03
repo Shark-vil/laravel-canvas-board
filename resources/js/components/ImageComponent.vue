@@ -78,19 +78,15 @@ export default {
 			if (!this.$refs.image.getNode().isClientRectOnScreen()) return false;
 			return true;
 		},
-		checkImage: async function() {
+		updateImageData(entry) {
 			const imageConfig = this.imageConfig;
-
-			await axios.get('/api/board/get/' + this.database.id).then(response => {
-				const entry = response.data;
-				imageConfig.x = entry.x;
-				imageConfig.y = entry.y;
-				imageConfig.scaleX = entry.scaleX;
-				imageConfig.scaleY = entry.scaleY;
-				imageConfig.width = entry.width;
-				imageConfig.height = entry.height;
-				imageConfig.rotation = entry.rotation;
-			});
+			imageConfig.x = entry.x;
+			imageConfig.y = entry.y;
+			imageConfig.scaleX = entry.scaleX;
+			imageConfig.scaleY = entry.scaleY;
+			imageConfig.width = entry.width;
+			imageConfig.height = entry.height;
+			imageConfig.rotation = entry.rotation;
 		},
 		deleteImage: async function() {
 			await axios.post('/api/board/delete/' + this.database.id).then(response => {

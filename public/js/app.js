@@ -5520,47 +5520,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.$refs.image.getNode().isClientRectOnScreen()) return false;
       return true;
     },
-    checkImage: function () {
-      var _checkImage = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var imageConfig;
+    updateImageData: function updateImageData(entry) {
+      var imageConfig = this.imageConfig;
+      imageConfig.x = entry.x;
+      imageConfig.y = entry.y;
+      imageConfig.scaleX = entry.scaleX;
+      imageConfig.scaleY = entry.scaleY;
+      imageConfig.width = entry.width;
+      imageConfig.height = entry.height;
+      imageConfig.rotation = entry.rotation;
+    },
+    deleteImage: function () {
+      var _deleteImage = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                imageConfig = this.imageConfig;
-                _context.next = 3;
-                return axios.get('/api/board/get/' + this.database.id).then(function (response) {
-                  var entry = response.data;
-                  imageConfig.x = entry.x;
-                  imageConfig.y = entry.y;
-                  imageConfig.scaleX = entry.scaleX;
-                  imageConfig.scaleY = entry.scaleY;
-                  imageConfig.width = entry.width;
-                  imageConfig.height = entry.height;
-                  imageConfig.rotation = entry.rotation;
-                });
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function checkImage() {
-        return _checkImage.apply(this, arguments);
-      }
-
-      return checkImage;
-    }(),
-    deleteImage: function () {
-      var _deleteImage = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
+                _context.next = 2;
                 return axios.post('/api/board/delete/' + this.database.id).then(function (response) {
                   var entry = response.data;
                   console.log(entry);
@@ -5568,10 +5544,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function deleteImage() {
@@ -5581,11 +5557,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return deleteImage;
     }(),
     updateImage: function () {
-      var _updateImage = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(target) {
+      var _updateImage = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(target) {
         var formData;
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 formData = new FormData();
                 formData.append('x', target.getX());
@@ -5595,7 +5571,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('scaleX', target.scaleX());
                 formData.append('scaleY', target.scaleY());
                 formData.append('rotation', target.rotation());
-                _context3.next = 10;
+                _context2.next = 10;
                 return axios.post('/api/board/update/' + this.database.id, formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
@@ -5607,10 +5583,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 10:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee2, this);
       }));
 
       function updateImage(_x) {
@@ -5679,50 +5655,165 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     this.layer = this.$refs.layer;
     this.taskUpateDataList();
-    this.taskUpdateElementsData();
   },
   methods: {
     taskUpateDataList: function () {
-      var _taskUpateDataList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _taskUpateDataList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var _this = this;
 
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (false) {}
+        var _loop;
 
-                _context.prev = 1;
-                _context.next = 4;
-                return axios.get('/api/board/get').then(function (response) {
-                  var entries = response.data;
-                  if (entries == undefined) return;
-                  _this.boardImages = entries;
+        return _regeneratorRuntime().wrap(function _callee2$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
+                  var boardImages, editableImage;
+                  return _regeneratorRuntime().wrap(function _loop$(_context2) {
+                    while (1) {
+                      switch (_context2.prev = _context2.next) {
+                        case 0:
+                          boardImages = _this.$refs['board-images'];
+                          editableImage = _this.editableImage; // let isVisible = false;
+                          // if (boardImages != undefined && boardImages.length != 0) {
+                          // 	for (let boardEntryIndex = boardImages.length; boardEntryIndex >= 0; boardEntryIndex--) {
+                          // 		const boardEntry = boardImages[boardEntryIndex];
+                          // 		if (boardEntry == undefined) continue;
+                          // 		if (boardEntry.isVisible()) {
+                          // 			isVisible = true;
+                          // 			break;
+                          // 		}
+                          // 	}
+                          // } else {
+                          // 	isVisible = true;
+                          // }
+                          // if (!isVisible) {
+                          // 	await this.asyncDelay(500);
+                          // 	continue;
+                          // }
+
+                          _context2.prev = 2;
+                          _context2.next = 5;
+                          return axios.get('/api/board/get').then( /*#__PURE__*/function () {
+                            var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
+                              var entries, boardEntryIndex, boardEntry, entryIndex, entry;
+                              return _regeneratorRuntime().wrap(function _callee$(_context) {
+                                while (1) {
+                                  switch (_context.prev = _context.next) {
+                                    case 0:
+                                      entries = response.data;
+
+                                      if (!(entries == undefined)) {
+                                        _context.next = 3;
+                                        break;
+                                      }
+
+                                      return _context.abrupt("return");
+
+                                    case 3:
+                                      if (!(boardImages != undefined)) {
+                                        _context.next = 21;
+                                        break;
+                                      }
+
+                                      boardEntryIndex = boardImages.length;
+
+                                    case 5:
+                                      if (!(boardEntryIndex >= 0)) {
+                                        _context.next = 21;
+                                        break;
+                                      }
+
+                                      boardEntry = boardImages[boardEntryIndex];
+
+                                      if (!(boardEntry == undefined)) {
+                                        _context.next = 9;
+                                        break;
+                                      }
+
+                                      return _context.abrupt("continue", 18);
+
+                                    case 9:
+                                      entryIndex = entries.length;
+
+                                    case 10:
+                                      if (!(entryIndex >= 0)) {
+                                        _context.next = 18;
+                                        break;
+                                      }
+
+                                      entry = boardImages[entryIndex];
+
+                                      if (!(entry != undefined && entry != editableImage && entry.id == boardEntry.id)) {
+                                        _context.next = 15;
+                                        break;
+                                      }
+
+                                      boardEntry.updateImageData(entry);
+                                      return _context.abrupt("break", 18);
+
+                                    case 15:
+                                      entryIndex--;
+                                      _context.next = 10;
+                                      break;
+
+                                    case 18:
+                                      boardEntryIndex--;
+                                      _context.next = 5;
+                                      break;
+
+                                    case 21:
+                                      _this.boardImages = entries;
+
+                                    case 22:
+                                    case "end":
+                                      return _context.stop();
+                                  }
+                                }
+                              }, _callee);
+                            }));
+
+                            return function (_x) {
+                              return _ref.apply(this, arguments);
+                            };
+                          }());
+
+                        case 5:
+                          _context2.next = 10;
+                          break;
+
+                        case 7:
+                          _context2.prev = 7;
+                          _context2.t0 = _context2["catch"](2);
+                          console.error(_context2.t0);
+
+                        case 10:
+                          _context2.next = 12;
+                          return _this.asyncDelay(1000);
+
+                        case 12:
+                        case "end":
+                          return _context2.stop();
+                      }
+                    }
+                  }, _loop, null, [[2, 7]]);
                 });
 
-              case 4:
-                _context.next = 9;
+              case 1:
+                if (false) {}
+
+                return _context3.delegateYield(_loop(), "t0", 3);
+
+              case 3:
+                _context3.next = 1;
                 break;
 
-              case 6:
-                _context.prev = 6;
-                _context.t0 = _context["catch"](1);
-                console.error(_context.t0);
-
-              case 9:
-                _context.next = 11;
-                return this.asyncDelay(1000);
-
-              case 11:
-                _context.next = 0;
-                break;
-
-              case 13:
+              case 5:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee, this, [[1, 6]]);
+        }, _callee2);
       }));
 
       function taskUpateDataList() {
@@ -5731,105 +5822,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return taskUpateDataList;
     }(),
-    taskUpdateElementsData: function () {
-      var _taskUpdateElementsData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var entries, editableImage, index, entry;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                if (false) {}
-
-                _context2.prev = 1;
-                entries = this.$refs['board-images'];
-
-                if (!(entries != undefined)) {
-                  _context2.next = 16;
-                  break;
-                }
-
-                editableImage = this.editableImage;
-                index = 0;
-
-              case 6:
-                if (!(index < entries.length)) {
-                  _context2.next = 16;
-                  break;
-                }
-
-                entry = entries[index];
-
-                if (!(!entry.isVisible() || entry == editableImage)) {
-                  _context2.next = 10;
-                  break;
-                }
-
-                return _context2.abrupt("continue", 13);
-
-              case 10:
-                if (entry.layer == undefined) entry.setLayer(this.layer);
-                _context2.next = 13;
-                return entry.checkImage();
-
-              case 13:
-                index++;
-                _context2.next = 6;
-                break;
-
-              case 16:
-                _context2.next = 21;
-                break;
-
-              case 18:
-                _context2.prev = 18;
-                _context2.t0 = _context2["catch"](1);
-                console.error(_context2.t0);
-
-              case 21:
-                _context2.next = 23;
-                return this.asyncDelay(500);
-
-              case 23:
-                _context2.next = 0;
-                break;
-
-              case 25:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[1, 18]]);
-      }));
-
-      function taskUpdateElementsData() {
-        return _taskUpdateElementsData.apply(this, arguments);
-      }
-
-      return taskUpdateElementsData;
-    }(),
     asyncDelay: function () {
       var _asyncDelay = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(ms) {
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context3.next = 2;
+                _context4.next = 2;
                 return new Promise(function (resolve) {
                   return setTimeout(resolve, ms);
                 });
 
               case 2:
-                return _context3.abrupt("return", _context3.sent);
+                return _context4.abrupt("return", _context4.sent);
 
               case 3:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
         }, _callee3);
       }));
 
-      function asyncDelay(_x) {
+      function asyncDelay(_x2) {
         return _asyncDelay.apply(this, arguments);
       }
 

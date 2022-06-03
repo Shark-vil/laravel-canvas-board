@@ -25,16 +25,57 @@ export default {
 	mounted() {
 		this.layer = this.$refs.layer;
 		this.taskUpateDataList();
-		this.taskUpdateElementsData();
   },
 	methods: {
 		taskUpateDataList: async function() {
 			while (true)
 			{
+				const boardImages = this.$refs['board-images'];
+				const editableImage = this.editableImage;
+				// let isVisible = false;
+
+				// if (boardImages != undefined && boardImages.length != 0) {
+				// 	for (let boardEntryIndex = boardImages.length; boardEntryIndex >= 0; boardEntryIndex--) {
+				// 		const boardEntry = boardImages[boardEntryIndex];
+				// 		if (boardEntry == undefined) continue;
+				// 		if (boardEntry.isVisible()) {
+				// 			isVisible = true;
+				// 			break;
+				// 		}
+				// 	}
+				// } else {
+				// 	isVisible = true;
+				// }
+
+				// if (!isVisible) {
+				// 	await this.asyncDelay(500);
+				// 	continue;
+				// }
+
 				try {
-					await axios.get('/api/board/get').then(response => {
+					await axios.get('/api/board/get').then(async (response) => {
 						const entries = response.data;
 						if (entries == undefined) return;
+
+						if (boardImages != undefined) {
+							for (let boardEntryIndex = boardImages.length; boardEntryIndex >= 0; boardEntryIndex--) {
+								const boardEntry = boardImages[boardEntryIndex];
+								if (boardEntry == undefined) continue;
+		
+								for (let entryIndex = entries.length; entryIndex >= 0; entryIndex--) {
+									const entry = boardImages[entryIndex];
+									if (entry != undefined && entry != editableImage && entry.id == boardEntry.id) {
+										boardEntry.updateImageData(entry);
+										break;
+									}
+
+									// await this.asyncDelay(10);
+								}
+		
+								// await this.asyncDelay(10);
+							}
+						}
+
 						this.boardImages = entries;
 					});
 				} catch(ex) {
@@ -42,35 +83,6 @@ export default {
 				}
 
 				await this.asyncDelay(1000);
-			}
-		},
-		taskUpdateElementsData: async function() {
-			while (true)
-			{
-				try {
-					const entries = this.$refs['board-images'];
-
-					if (entries != undefined) {
-						const editableImage = this.editableImage;
-
-						for (let index = 0; index < entries.length; index++) {
-							const entry = entries[index];
-
-							if (!entry.isVisible() || entry == editableImage)
-								continue;
-		
-							if (entry.layer == undefined)
-								entry.setLayer(this.layer);
-
-							await entry.checkImage();
-							// await this.asyncDelay(100);
-						}
-					}
-				} catch(ex) {
-					console.error(ex);
-				}
-
-				await this.asyncDelay(500);
 			}
 		},
 		asyncDelay: async function(ms) {
