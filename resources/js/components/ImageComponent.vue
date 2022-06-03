@@ -9,7 +9,7 @@
 
 <script>
 export default {
-	props: [ 'id', 'url', 'x', 'y', 'width', 'height', 'scaleX', 'scaleY' ],
+	props: [ 'id', 'url', 'x', 'y', 'width', 'height', 'scaleX', 'scaleY', 'rotation' ],
   data() {
     return {
 			gifCanvas: undefined,

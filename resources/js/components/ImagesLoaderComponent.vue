@@ -8,6 +8,7 @@
 				:y="entry.y"
 				:scaleX="entry.scaleX"
 				:scaleY="entry.scaleY"
+				:rotation="entry.rotation"
 				ref="board-images"/>
 		</div>
 	</v-layer>
