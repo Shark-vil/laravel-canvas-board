@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::post('/api/board/upload',
+	'App\Http\Controllers\Api\Board\UploadImageController@upload');
+
+Route::post('/api/board/update/{id}',
+	'App\Http\Controllers\Api\Board\UploadImageController@update');
+
+Route::get('/api/board/get/{id?}',
+	'App\Http\Controllers\Api\Board\UploadImageController@get');
