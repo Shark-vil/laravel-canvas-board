@@ -27,6 +27,8 @@ export default {
       mainBoardConfig: {
         width: width,
         height: height,
+				x: 0,
+				y: 0,
 				draggable: true,
       },
 			closeButtonConfig: {
