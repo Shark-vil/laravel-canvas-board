@@ -14,3 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css');
+
+mix.js('resources/js/jquery.js', 'public/js');
+
+mix.copy('resources/dist/js/gifler.min.js', 'public/js');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Board;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; 
 use App\Models\BoardImage;
 
 class UploadImageController extends Controller
@@ -31,6 +32,14 @@ class UploadImageController extends Controller
 			'rotation' => $rotation
 		]);
 
+		return response()->json($entry);
+	}
+
+	public function delete(int $id)
+	{
+		$entry = BoardImage::where('id', $id)->first();
+		Storage::delete('public' . $entry->path);
+		$entry->delete();
 		return response()->json($entry);
 	}
 

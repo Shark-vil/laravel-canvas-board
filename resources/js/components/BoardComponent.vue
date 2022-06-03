@@ -4,19 +4,12 @@
 			ref="stage"
 			:config="mainBoardConfig"
 			@dragend="handleDragEnd"
+			@dblclick="handleStageDoubleClick"
 			@mousedown="handleStageMouseDown"
-			@touchstart="handleStageMouseDown">
+			@touchstart="handleStageMouseDown"
+			@transformend="handleTransformEnd">
+			<board-image-loader ref="image-laoder"/>
 			<v-layer>
-				<div v-for="entry in boardImages" :key="entry.id">
-					<board-image
-						:id="entry.id"
-						:url="'storage/' + entry.path"
-						:x="entry.x"
-						:y="entry.y"
-						:scaleX="entry.scaleX"
-						:scaleY="entry.scaleY"
-						ref="board-images"/>
-				</div>
 				<v-transformer ref="transformer"/>
 			</v-layer>
 		</v-stage>
@@ -31,12 +24,15 @@ export default {
   data() {
     return {
 			selectedShapeName: '',
-			boardImages: [],
       mainBoardConfig: {
         width: width,
         height: height,
 				draggable: true,
       },
+			closeButtonConfig: {
+				radius: 25,
+				fill: 'red'
+			}
     };
   },
 	mounted() {
@@ -46,41 +42,8 @@ export default {
 			this.mainBoardConfig.x = parseInt(positions[0]);
 			this.mainBoardConfig.y = parseInt(positions[1]);
 		}
-
-		this.runBackgroundTask();
   },
 	methods: {
-		runBackgroundTask: async function() {
-			while (true)
-			{
-				try {
-					await axios.get('/api/board/get').then(response => {
-						const entries = response.data;
-						this.boardImages = entries;
-					});
-				} catch(ex) {
-					console.error(ex);
-				}
-
-				try {
-					const entries = this.$refs['board-images']
-					for (let index = 0; index < entries.length; index++) {
-						const entry = entries[index];
-						if (entry.isVisible()) {
-							await entry.checkImage();
-							await this.asyncDelay(100);
-						}
-					}
-				} catch(ex) {
-					console.error(ex);
-				}
-
-				await this.asyncDelay(500);
-			}
-		},
-		asyncDelay: async function(ms) {
-			return await new Promise(resolve => setTimeout(resolve, ms));
-		},
 		getStage() {
 			return this.$refs.stage.getStage();
 		},
@@ -95,8 +58,6 @@ export default {
 
 			const defaultSize = 250;
 			const normalSize = 1 / defaultSize;
-
-			const boardImages = this.boardImages;
 
 			var fr = new FileReader;
 
@@ -147,7 +108,6 @@ export default {
 						}
 					}).then(response => {
 						let entry = response.data;
-						boardImages.push(entry);
 						console.log(entry);
 					});
 					
@@ -159,9 +119,24 @@ export default {
 
 			fr.readAsDataURL(file);
 		},
+		handleTransformEnd() {
+			this.selectedShapeName = '';
+			this.updateTransformer();
+		},
+		handleStageDoubleClick(e) {
+			if (this.selectedShapeName == undefined || this.selectedShapeName == '') return;
+
+			try {
+				this.$refs['image-laoder'].onDelete(e.target.name());
+				this.selectedShapeName = '';
+				this.updateTransformer();
+			} catch(e) {
+				console.error(e);
+			}
+		},
     handleStageMouseDown(e) {
       if (e.target === e.target.getStage()) {
-        this.selectedShapeName = "";
+        this.selectedShapeName = '';
         this.updateTransformer();
         return;
       }
@@ -180,6 +155,8 @@ export default {
       const transformerNode = this.$refs.transformer.getNode();
       const stage = transformerNode.getStage();
       const { selectedShapeName } = this;
+
+			this.$refs['image-laoder'].onEdit(selectedShapeName);
 
       const selectedNode = stage.findOne(`.${selectedShapeName}`);
       if (selectedNode === transformerNode.node()) {

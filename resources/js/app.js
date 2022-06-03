@@ -25,6 +25,7 @@ Vue.use(VueKonva);
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('canvas-board', require('./components/BoardComponent.vue').default);
 Vue.component('board-image', require('./components/ImageComponent.vue').default);
+Vue.component('board-image-loader', require('./components/ImagesLoaderComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

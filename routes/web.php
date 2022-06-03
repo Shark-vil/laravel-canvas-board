@@ -20,6 +20,9 @@ Route::get('/', function () {
 Route::post('/api/board/upload',
 	'App\Http\Controllers\Api\Board\UploadImageController@upload');
 
+Route::post('/api/board/delete/{id}',
+	'App\Http\Controllers\Api\Board\UploadImageController@delete');
+
 Route::post('/api/board/update/{id}',
 	'App\Http\Controllers\Api\Board\UploadImageController@update');
 

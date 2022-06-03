@@ -12,10 +12,11 @@ export default {
 	props: [ 'id', 'url', 'x', 'y', 'width', 'height', 'scaleX', 'scaleY' ],
   data() {
     return {
+			gifCanvas: undefined,
+			layer: undefined,
 			database: {
 				id: -1,
 			},
-			isEdit: false,
 			imageConfig: {
 				name: '',
 				image: null,
@@ -32,39 +33,41 @@ export default {
 		this.database.id = parseInt(this.id);
 		this.imageConfig.name = 'img-' + this.database.id;
 
-		if (this.width != undefined && !isNaN(this.width))
-			this.imageConfig.width = parseFloat(this.width);
+		this.imageConfig.width = this.width != undefined && !isNaN(this.width)
+			? parseFloat(this.width) : this.imageConfig.width;
 
-		if (this.height != undefined && !isNaN(this.height))
-			this.imageConfig.height = parseFloat(this.height);
+		this.imageConfig.height = this.height != undefined && !isNaN(this.height)
+			? parseFloat(this.height) : this.imageConfig.height;
 
-		if (this.x != undefined && !isNaN(this.x))
-			this.imageConfig.x = parseFloat(this.x);
+		this.imageConfig.x = this.x != undefined && !isNaN(this.x)
+			? parseFloat(this.x) : this.imageConfig.x;
 
-		if (this.y != undefined && !isNaN(this.y))
-			this.imageConfig.y = parseFloat(this.y);
+		this.imageConfig.y = this.y != undefined && !isNaN(this.y)
+			? parseFloat(this.y) : this.imageConfig.y;
 
-		if (this.scaleX != undefined && !isNaN(this.scaleX))
-			this.imageConfig.scaleX = parseFloat(this.scaleX);
+		this.imageConfig.scaleX = this.scaleX != undefined && !isNaN(this.scaleX)
+			? parseFloat(this.scaleX) : this.imageConfig.scaleX;
 
-		if (this.scaleY != undefined && !isNaN(this.scaleY))
-			this.imageConfig.scaleY = parseFloat(this.scaleY);
+		this.imageConfig.scaleY = this.scaleY != undefined && !isNaN(this.scaleY)
+			? parseFloat(this.scaleY) : this.imageConfig.scaleY;
 
-		if (this.rotation != undefined && !isNaN(this.rotation))
-			this.imageConfig.rotation = parseFloat(this.rotation);
+		this.imageConfig.rotation = this.rotation != undefined && !isNaN(this.rotation)
+			? parseFloat(this.rotation) : this.imageConfig.rotation;
 
+		const extension = this.url.split('.').pop();
     const image = new window.Image();
     image.src = this.url;
     image.onload = () => {
-			this.imageConfig.image = image;
-			// this.handleInit();
-			// setInterval(this.checkImage, 1000);
+			if (extension == 'gif') {
+				this.gifCanvas = document.createElement('canvas');
+				this.imageConfig.image = this.gifCanvas;
+				gifler(this.url).frames(this.gifCanvas, this.onDrawGif);
+			} else {
+				this.imageConfig.image = image;
+			}
     };
   },
 	methods: {
-		// handleInit() {
-		// 	this.$emit('init', this);
-		// },
 		handleTransformEnd(e) {
 			this.updateImage(e.target);
     },
@@ -72,12 +75,10 @@ export default {
 			this.updateImage(e.target);
     },
 		isVisible() {
-			if (!this.$refs.image.getNode().isClientRectOnScreen() || this.isEdit) return false;
+			if (!this.$refs.image.getNode().isClientRectOnScreen()) return false;
 			return true;
 		},
 		checkImage: async function() {
-			if (!this.isVisible()) return;
-
 			const imageConfig = this.imageConfig;
 
 			await axios.get('/api/board/get/' + this.database.id).then(response => {
@@ -91,6 +92,12 @@ export default {
 				imageConfig.rotation = entry.rotation;
 			});
 		},
+		deleteImage: async function() {
+			await axios.post('/api/board/delete/' + this.database.id).then(response => {
+				let entry = response.data;
+				console.log(entry);
+			});
+		},
 		updateImage: async function(target) {
 			const formData = new FormData();
 			formData.append('x', target.getX());
@@ -101,8 +108,6 @@ export default {
 			formData.append('scaleY', target.scaleY());
 			formData.append('rotation', target.rotation());
 
-			this.isEdit = true;
-
 			await axios.post('/api/board/update/' + this.database.id, formData,
 			{
 				headers: {
@@ -111,10 +116,17 @@ export default {
 			}).then(response => {
 				let entry = response.data;
 				console.log(entry);
-			}).finally(() => {
-				this.isEdit = false;
-				console.log(this.isEdit);
 			});
+		},
+		setLayer(layer) {
+			this.layer = layer;
+		},
+		onDrawGif(ctx, frame) {
+			if (this.layer == undefined) return;
+			this.gifCanvas.width = frame.width;
+			this.gifCanvas.height = frame.height;
+			ctx.drawImage(frame.buffer, 0, 0);
+			this.layer.getNode().draw();
 		}
   }
 };
