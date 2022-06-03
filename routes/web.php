@@ -14,17 +14,37 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+	return redirect()->route('dashboard');
 });
 
-Route::post('/api/board/upload',
-	'App\Http\Controllers\Api\Board\UploadImageController@upload');
+Route::get('/dashboard', function () {
+	return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::post('/api/board/delete/{id}',
-	'App\Http\Controllers\Api\Board\UploadImageController@delete');
+Route::middleware(['auth'])->group(function () {
+	Route::get('/dashboard/canvas', function () {
+		return view('canvas');
+	})->name('canvas');
 
-Route::post('/api/board/update/{id}',
-	'App\Http\Controllers\Api\Board\UploadImageController@update');
+	Route::post(
+		'/api/board/upload',
+		'App\Http\Controllers\Api\Board\UploadImageController@upload'
+	);
 
-Route::get('/api/board/get/{id?}',
-	'App\Http\Controllers\Api\Board\UploadImageController@get');
+	Route::post(
+		'/api/board/delete/{id}',
+		'App\Http\Controllers\Api\Board\UploadImageController@delete'
+	);
+
+	Route::post(
+		'/api/board/update/{id}',
+		'App\Http\Controllers\Api\Board\UploadImageController@update'
+	);
+
+	Route::get(
+		'/api/board/get/{id?}',
+		'App\Http\Controllers\Api\Board\UploadImageController@get'
+	);
+});
+
+require __DIR__ . '/auth.php';

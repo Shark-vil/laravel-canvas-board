@@ -1,5 +1,3 @@
-@extends('layouts.app')
-
 @section('styles')
 	<style>
 		.canvas-container {
@@ -10,8 +8,8 @@
 	</style>
 @endsection
 
-@section('content')
+<x-app-layout>
 	<div class="canvas-container">
 		<canvas-board></canvas-board>
 	</div>
-@endsection
+</x-app-layout>

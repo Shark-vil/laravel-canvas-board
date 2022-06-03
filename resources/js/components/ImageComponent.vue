@@ -54,14 +54,15 @@ export default {
 		this.imageConfig.rotation = this.rotation != undefined && !isNaN(this.rotation)
 			? parseFloat(this.rotation) : this.imageConfig.rotation;
 
-		const extension = this.url.split('.').pop();
+		const imageAddress = window.APP_URL + '/' + this.url;
+		const extension = imageAddress.split('.').pop();
     const image = new window.Image();
-    image.src = this.url;
+    image.src = imageAddress;
     image.onload = () => {
 			if (extension == 'gif') {
 				this.gifCanvas = document.createElement('canvas');
 				this.imageConfig.image = this.gifCanvas;
-				gifler(this.url).frames(this.gifCanvas, this.onDrawGif);
+				gifler(imageAddress).frames(this.gifCanvas, this.onDrawGif);
 			} else {
 				this.imageConfig.image = image;
 			}
