@@ -27,6 +27,7 @@ Vue.use(VueKonva);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('board-tools', require('./components/ToolsComponent.vue').default);
 Vue.component('canvas-board', require('./components/BoardComponent.vue').default);
 Vue.component('board-image', require('./components/ImageComponent.vue').default);
 Vue.component('board-image-loader', require('./components/ImagesLoaderComponent.vue').default);

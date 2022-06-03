@@ -1,5 +1,6 @@
 <template>
 	<div @drop.prevent="dragFile" @dragenter.prevent @dragover.prevent>
+		<board-tools/>
 		<v-stage
 			ref="stage"
 			:config="mainBoardConfig"
@@ -181,3 +182,13 @@ export default {
   }
 };
 </script>
+
+<style>
+	body {
+		overflow-x: hidden;
+	}
+
+	body::-webkit-scrollbar { 
+		display: none;
+	}
+</style>
