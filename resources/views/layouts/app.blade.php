@@ -20,8 +20,6 @@
 	<title>Canvas Board</title>
 </head>
 <body>
-	<div class="bg-image bg-blur"></div>
-	<div id="particles" class="bg-particles bg-particles-blur"></div>
 	<div id="app">
 		@yield('content')
 	</div>
