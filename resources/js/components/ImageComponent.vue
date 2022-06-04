@@ -90,7 +90,7 @@ export default {
 			imageConfig.rotation = entry.rotation;
 		},
 		deleteImage: async function() {
-			await axios.post('/api/board/delete/' + this.database.id).then(response => {
+			await axios.post('/api/board/image/delete/' + this.database.id).then(response => {
 				let entry = response.data;
 				console.log(entry);
 			});
@@ -105,7 +105,7 @@ export default {
 			formData.append('scaleY', target.scaleY());
 			formData.append('rotation', target.rotation());
 
-			await axios.post('/api/board/update/' + this.database.id, formData,
+			await axios.post('/api/board/image/update/' + this.database.id, formData,
 			{
 				headers: {
 					'Content-Type': 'multipart/form-data'

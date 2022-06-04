@@ -104,7 +104,7 @@ export default {
 
 					formData.append('rotation', 0);
 
-					axios.post('/api/board/upload', formData,
+					axios.post('/api/board/image/upload', formData,
 					{
 						headers: {
 							'Content-Type': 'multipart/form-data'

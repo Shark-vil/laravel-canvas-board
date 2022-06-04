@@ -54,7 +54,7 @@ export default {
 				// }
 
 				try {
-					await axios.get('/api/board/get').then(async (response) => {
+					await axios.get('/api/board/image/get').then(async (response) => {
 						const entries = response.data;
 						if (entries == undefined) return;
 
@@ -67,6 +67,11 @@ export default {
 									const entry = boardImages[entryIndex];
 									if (entry != undefined && entry != editableImage && entry.id == boardEntry.id) {
 										boardEntry.updateImageData(entry);
+
+										if (boardEntry.layer == undefined) {
+											boardEntry.setLayer(this.layer);
+										}
+
 										break;
 									}
 

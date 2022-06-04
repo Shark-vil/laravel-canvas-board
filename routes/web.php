@@ -26,24 +26,25 @@ Route::middleware(['auth'])->group(function () {
 		return view('canvas');
 	})->name('canvas');
 
-	Route::post(
-		'/api/board/upload',
-		'App\Http\Controllers\Api\Board\UploadImageController@upload'
+	// API: Image
+	Route::prefix('api')->post(
+		'/board/image/upload',
+		'App\Http\Controllers\Api\Board\ImageController@upload'
 	);
 
-	Route::post(
-		'/api/board/delete/{id}',
-		'App\Http\Controllers\Api\Board\UploadImageController@delete'
+	Route::prefix('api')->post(
+		'/board/image/delete/{id}',
+		'App\Http\Controllers\Api\Board\ImageController@delete'
 	);
 
-	Route::post(
-		'/api/board/update/{id}',
-		'App\Http\Controllers\Api\Board\UploadImageController@update'
+	Route::prefix('api')->post(
+		'/board/image/update/{id}',
+		'App\Http\Controllers\Api\Board\ImageController@update'
 	);
-
-	Route::get(
-		'/api/board/get/{id?}',
-		'App\Http\Controllers\Api\Board\UploadImageController@get'
+	
+	Route::prefix('api')->get(
+		'/board/image/get/{id?}',
+		'App\Http\Controllers\Api\Board\ImageController@get'
 	);
 });
 

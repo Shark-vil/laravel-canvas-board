@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File; 
 use App\Models\BoardImage;
 
-class UploadImageController extends Controller
+class ImageController extends Controller
 {
 	public function upload(Request $request)
 	{

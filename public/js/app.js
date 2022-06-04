@@ -8271,7 +8271,7 @@ var height = window.innerHeight;
           formData.append('width', img.width);
           formData.append('height', img.height);
           formData.append('rotation', 0);
-          axios.post('/api/board/upload', formData, {
+          axios.post('/api/board/image/upload', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
@@ -8452,7 +8452,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post('/api/board/delete/' + this.database.id).then(function (response) {
+                return axios.post('/api/board/image/delete/' + this.database.id).then(function (response) {
                   var entry = response.data;
                   console.log(entry);
                 });
@@ -8487,7 +8487,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append('scaleY', target.scaleY());
                 formData.append('rotation', target.rotation());
                 _context2.next = 10;
-                return axios.post('/api/board/update/' + this.database.id, formData, {
+                return axios.post('/api/board/image/update/' + this.database.id, formData, {
                   headers: {
                     'Content-Type': 'multipart/form-data'
                   }
@@ -8610,7 +8610,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                           _context2.prev = 2;
                           _context2.next = 5;
-                          return axios.get('/api/board/get').then( /*#__PURE__*/function () {
+                          return axios.get('/api/board/image/get').then( /*#__PURE__*/function () {
                             var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(response) {
                               var entries, boardEntryIndex, boardEntry, entryIndex, entry;
                               return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -8628,7 +8628,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                                     case 3:
                                       if (!(boardImages != undefined)) {
-                                        _context.next = 21;
+                                        _context.next = 22;
                                         break;
                                       }
 
@@ -8636,7 +8636,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                                     case 5:
                                       if (!(boardEntryIndex >= 0)) {
-                                        _context.next = 21;
+                                        _context.next = 22;
                                         break;
                                       }
 
@@ -8647,41 +8647,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                                         break;
                                       }
 
-                                      return _context.abrupt("continue", 18);
+                                      return _context.abrupt("continue", 19);
 
                                     case 9:
                                       entryIndex = entries.length;
 
                                     case 10:
                                       if (!(entryIndex >= 0)) {
-                                        _context.next = 18;
+                                        _context.next = 19;
                                         break;
                                       }
 
                                       entry = boardImages[entryIndex];
 
                                       if (!(entry != undefined && entry != editableImage && entry.id == boardEntry.id)) {
-                                        _context.next = 15;
+                                        _context.next = 16;
                                         break;
                                       }
 
                                       boardEntry.updateImageData(entry);
-                                      return _context.abrupt("break", 18);
 
-                                    case 15:
+                                      if (boardEntry.layer == undefined) {
+                                        boardEntry.setLayer(_this.layer);
+                                      }
+
+                                      return _context.abrupt("break", 19);
+
+                                    case 16:
                                       entryIndex--;
                                       _context.next = 10;
                                       break;
 
-                                    case 18:
+                                    case 19:
                                       boardEntryIndex--;
                                       _context.next = 5;
                                       break;
 
-                                    case 21:
+                                    case 22:
                                       _this.boardImages = entries;
 
-                                    case 22:
+                                    case 23:
                                     case "end":
                                       return _context.stop();
                                   }
@@ -8892,7 +8897,6 @@ Vue.use((vue_konva__WEBPACK_IMPORTED_MODULE_1___default()));
 */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 Vue.component('board-tools', (__webpack_require__(/*! ./components/ToolsComponent.vue */ "./resources/js/components/ToolsComponent.vue")["default"]));
 Vue.component('canvas-board', (__webpack_require__(/*! ./components/BoardComponent.vue */ "./resources/js/components/BoardComponent.vue")["default"]));
