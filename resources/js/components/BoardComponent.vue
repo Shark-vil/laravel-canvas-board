@@ -104,5 +104,11 @@ export default {
 </script>
 
 <style>
+	body {
+		overflow-x: hidden;
+	}
 
+	body::-webkit-scrollbar { 
+		display: none;
+	}
 </style>
