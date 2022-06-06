@@ -32,7 +32,6 @@ export default {
 				typeId: '',
 				name: '',
 				text: '',
-				width: 200,
 				scaleX: 1,
 				scaleY: 1,
 				x: 0,
@@ -41,6 +40,7 @@ export default {
 				rotation: 0,
 				draggable: true,
 				align: 'center',
+				wrap: "word",
 				verticalAlign: 'middle',
 			}
 		}
@@ -52,7 +52,7 @@ export default {
 		nodeConfig.uniqueId = parseInt(this.id);
 
 		if (this.text != undefined) nodeConfig.text = this.text;
-		if (this.width != undefined) nodeConfig.width = parseFloat(this.width);
+		// if (this.width != undefined) nodeConfig.width = parseFloat(this.width);
 		if (this.scaleX != undefined) nodeConfig.scaleX = parseFloat(this.scaleX);
 		if (this.scaleY != undefined) nodeConfig.scaleY = parseFloat(this.scaleY);
 		if (this.x != undefined) nodeConfig.x = parseInt(this.x);
@@ -92,6 +92,11 @@ export default {
 				}
 			}).Start()
 		},
+		Delete: async function() {
+			await axios.post('/api/board/text/delete/' + this.id).then(response => {
+				console.log('/api/board/text/delete/' + this.id, response);
+			});
+		},
 		EditMode: function () {
 			const DbUpdate = this.DbUpdate;
 			const textNode = this.konvaNode;
@@ -111,18 +116,18 @@ export default {
 				textNode.isEditMode = false;
 			}
 
-			let setTextareaWidth = function(newWidth) {
-				if (!newWidth) newWidth = textNode.placeholder.length * textNode.fontSize();
+			// let setTextareaWidth = function(newWidth) {
+			// 	if (!newWidth) newWidth = textNode.placeholder.length * textNode.fontSize();
 
-				const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-				const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-				const isEdge = document.documentMode || /Edge/.test(navigator.userAgent);
+			// 	const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+			// 	const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+			// 	const isEdge = document.documentMode || /Edge/.test(navigator.userAgent);
 
-				if (isSafari || isFirefox) newWidth = Math.ceil(newWidth);
-				if (isEdge) newWidth += 1;
+			// 	if (isSafari || isFirefox) newWidth = Math.ceil(newWidth);
+			// 	if (isEdge) newWidth += 1;
 
-				textarea.style.width = newWidth + 'px';
-			}
+			// 	textarea.style.width = newWidth + 'px';
+			// }
 
 			textarea.addEventListener('keydown', function (e) {
 				const isNotShiftEnter = e.enter && !e.shiftKey;
@@ -133,11 +138,10 @@ export default {
 			});
 
 			textarea.addEventListener('keydown', function (e) {
-				const scale = textNode.getAbsoluteScale().x;
-				setTextareaWidth(textNode.width() * scale);
+				// const scale = textNode.getAbsoluteScale().x;
+				// setTextareaWidth(textNode.width() * scale);
 				textarea.style.height = 'auto';
-				textarea.style.height =
-				textarea.scrollHeight + textNode.fontSize() + 'px';
+				textarea.style.height = textarea.scrollHeight + textNode.fontSize() + 'px';
 			});
 
 			let handleOutsideClick = function(e) {
@@ -173,7 +177,8 @@ export default {
 			textarea.style.overflow = 'hidden';
 			textarea.style.background = 'none';
 			textarea.style.outline = 'none';
-			textarea.style.resize = 'none';
+			// textarea.style.resize = 'none';
+			textarea.style.resize = 'both';
 			textarea.style.lineHeight = textNode.lineHeight();
 			textarea.style.fontFamily = textNode.fontFamily();
 			textarea.style.transformOrigin = 'left top';

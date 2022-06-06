@@ -70,11 +70,11 @@ export default {
 			this.UploadImage(e);
 		},
 		DoubleClickHandler: function(e) {
-			this.NodeRemove();
+			// this.NodeRemove();
 		},
-		NodeRemove: function() {
-			this.transformer.NodeRemove();
-		},
+		// NodeRemove: function() {
+		// 	this.transformer.NodeRemove();
+		// },
 		UploadImage: function(e) {
 			const file = e.dataTransfer.files[0];
 			const uploader = new ImageUploader(this.konvaStage);
