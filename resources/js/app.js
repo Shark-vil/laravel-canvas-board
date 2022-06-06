@@ -27,9 +27,15 @@ Vue.use(VueKonva);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('board-tools', require('./components/ToolsComponent.vue').default);
+Vue.component('board-zoom', require('./components/ZoomComponent.vue').default);
 Vue.component('canvas-board', require('./components/BoardComponent.vue').default);
-Vue.component('board-image', require('./components/ImageComponent.vue').default);
-Vue.component('board-image-loader', require('./components/ImagesLoaderComponent.vue').default);
+Vue.component('board-text', require('./components/nodes/TextNode.vue').default);
+Vue.component('board-text-bootstrap', require('./components/bootstrap/TextNodeBootstrap.vue').default);
+Vue.component('board-image', require('./components/nodes/ImageNode.vue').default);
+Vue.component('board-image-bootstrap', require('./components/bootstrap/ImageNodeBootstrap.vue').default);
+Vue.component('board-transformer', require('./components/nodes/TransformerNode.vue').default);
+// Vue.component('board-image', require('./components/ImageComponent.vue').default);
+// Vue.component('board-image-loader', require('./components/ImagesLoaderComponent.vue').default);
 
 /**
 * Next, we will create a fresh Vue application instance and attach it to

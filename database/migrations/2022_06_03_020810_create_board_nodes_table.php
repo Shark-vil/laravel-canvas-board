@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoardImagesTable extends Migration
+class CreateBoardNodesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,9 +13,10 @@ class CreateBoardImagesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('board_images', function (Blueprint $table) {
+		Schema::create('board_nodes', function (Blueprint $table) {
 			$table->id();
-			$table->string('path');
+			$table->string('uuid')->uuid();
+			$table->string('type');
 			$table->float('x')->default(0);
 			$table->float('y')->default(0);
 			$table->float('scaleX')->default(1);
@@ -23,6 +24,7 @@ class CreateBoardImagesTable extends Migration
 			$table->float('width')->default(100);
 			$table->float('height')->default(100);
 			$table->float('rotation')->default(0);
+			$table->json('property')->nullable();
 			$table->timestamps();
 		});
 	}
@@ -34,6 +36,6 @@ class CreateBoardImagesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('board_images');
+		Schema::dropIfExists('board_nodes');
 	}
 }

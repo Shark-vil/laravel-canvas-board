@@ -27,7 +27,41 @@ export default {
 
 		},
 		addText() {
+			const board = this.$boardInstance;
+			const konvaStage = board.konvaStage;
+			
+			let posX = -konvaStage.getX();
+			let posY = -konvaStage.getY();
 
+			// let scaleX = konvaStage.scaleX();
+			// let scaleY = konvaStage.scaleY()
+
+			// posX += (konvaStage.width() / scaleX) / 2;
+			// posY += (konvaStage.height() / scaleY) / 2;
+
+			posX += konvaStage.width() / 2;
+			posY += konvaStage.height() / 2;
+
+			const width = 200;
+
+			const formData = new FormData();
+			formData.append('text', 'Example text');
+			formData.append('fontSize', 12);
+			formData.append('x', posX - (width / 2));
+			formData.append('y', posY);
+			formData.append('scaleX', 1);
+			formData.append('scaleY', 1);
+			formData.append('width', width);
+			formData.append('rotation', 0);
+
+			axios.post('/api/board/text/add', formData,
+			{
+				headers: { 'Content-Type': 'multipart/form-data' }
+			}).then(response => {
+				const entry = response.data;
+				if (entry == undefined) return;
+				console.log(entry);
+			});
 		},
 		addArrow() {
 

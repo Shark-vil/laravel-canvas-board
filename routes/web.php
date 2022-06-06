@@ -28,8 +28,8 @@ Route::middleware(['auth'])->group(function () {
 
 	// API: Image
 	Route::prefix('api')->post(
-		'/board/image/upload',
-		'App\Http\Controllers\Api\Board\ImageController@upload'
+		'/board/image/add',
+		'App\Http\Controllers\Api\Board\ImageController@add'
 	);
 
 	Route::prefix('api')->post(
@@ -45,6 +45,27 @@ Route::middleware(['auth'])->group(function () {
 	Route::prefix('api')->get(
 		'/board/image/get/{id?}',
 		'App\Http\Controllers\Api\Board\ImageController@get'
+	);
+
+	// API: Text
+	Route::prefix('api')->post(
+		'/board/text/add',
+		'App\Http\Controllers\Api\Board\TextController@add'
+	);
+
+	Route::prefix('api')->post(
+		'/board/text/delete/{id}',
+		'App\Http\Controllers\Api\Board\TextController@delete'
+	);
+
+	Route::prefix('api')->post(
+		'/board/text/update/{id}',
+		'App\Http\Controllers\Api\Board\TextController@update'
+	);
+	
+	Route::prefix('api')->get(
+		'/board/text/get/{id?}',
+		'App\Http\Controllers\Api\Board\TextController@get'
 	);
 });
 
