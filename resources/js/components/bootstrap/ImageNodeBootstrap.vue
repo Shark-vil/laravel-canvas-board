@@ -17,8 +17,7 @@
 </template>
 
 <script>
-import { Task } from '../task';
-import DataEditor from '../dataEditor';
+import { NodeBootstrap } from './base/NodeBootstrap';
 
 export default {
 	data() {
@@ -27,43 +26,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.SyncCollection();
+		const bootstrap = new NodeBootstrap(this, 'image');
 	},
-	methods: {
-		SyncCollection: async function() {
-			const t = new Task();
-
-			while(true) {
-				try {
-					await axios.get('/api/board/image/get').then((response) => {
-						const entries = response.data;
-						if (entries == undefined) return;
-						this.dataList = entries;
-						this.StartLinker();
-					});
-				} catch(ex) {
-					console.error(ex);
-				}
-
-				await DataEditor.Modify(this.dataList, this.$refs.vueNodes);
-				await t.Wait(1000);
-			}
-		},
-		MathClamp: function(number, min, max) {
-			return Math.max(min, Math.min(number, max));
-		},
-		StartLinker: function() {
-			const vueNodes = this.$refs.vueNodes;
-			if (vueNodes == undefined) return;
-
-			for (let index = 0; index < vueNodes.length; index++) {
-				const vueNode = vueNodes[index];
-				if (vueNode == undefined || vueNode.konvaNode == undefined) continue;
-				if (vueNode.konvaNode.GetVueComponent == undefined) {
-					vueNode.konvaNode.GetVueComponent = () => { return vueNode };
-				}
-			}
-		}
-	}
 }
 </script>

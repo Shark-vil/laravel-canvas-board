@@ -57,10 +57,12 @@ export default {
 			axios.post('/api/board/text/add', formData,
 			{
 				headers: { 'Content-Type': 'multipart/form-data' }
-			}).then(response => {
-				const entry = response.data;
-				if (entry == undefined) return;
-				console.log(entry);
+			}).catch((error) => {
+				this.$notify({
+					title: 'Не удалось добавить текст',
+					text: error,
+					type: 'error'
+				});
 			});
 		},
 		addArrow() {

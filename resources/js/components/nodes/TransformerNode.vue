@@ -94,14 +94,14 @@ export default {
 				});
 			});
 		},
-		NodeRemove: async function() {
+		NodeRemove: function() {
 			if (this.selectedNode == undefined) return;
 
 			try {
 				if (this.selectedNode.GetVueComponent != undefined) {
 					const component = this.selectedNode.GetVueComponent()
 					if (typeof component.Delete == 'function') {
-						await component.Delete();
+						component.Delete();
 						this.selectedNode = undefined;
 					}
 				}

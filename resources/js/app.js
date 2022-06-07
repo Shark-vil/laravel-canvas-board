@@ -18,6 +18,20 @@ Vue.use(VueKonva);
 import Notifications from 'vue-notification';
 Vue.use(Notifications);
 
+// import Pusher from 'pusher-js';
+window.Pusher = require('pusher-js');
+
+// import Echo from 'laravel-echo';
+// window.Echo = new Echo({
+// 	broadcaster: process.env.MIX_PUSHER_APP_BROADCASTER,
+// 	key: process.env.MIX_PUSHER_APP_KEY,
+// 	cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+// 	wsHost: process.env.MIX_PUSHER_APP_WS_HOST,
+// 	wsPort: parseInt(process.env.MIX_PUSHER_APP_WS_PORT),
+// 	forceTLS: process.env.MIX_PUSHER_APP_FORCE_TLS == 'true' ? true : false,
+// 	disableStats: process.env.MIX_PUSHER_APP_DISABLE_STATS == 'true' ? true : false,
+// });
+
 /**
 * The following block of code may be used to automatically register your
 * Vue components. It will recursively scan this directory for the Vue

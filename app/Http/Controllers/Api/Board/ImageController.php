@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File; 
 use App\Models\BoardNode;
 use Illuminate\Support\Str;
+use App\Events\NodeTransform;
+use App\Events\NodeCreated;
+use App\Events\NodeRemoved;
 
 class ImageController extends Controller
 {
@@ -46,6 +49,8 @@ class ImageController extends Controller
 
 		$entry = BoardNode::create($createData);
 
+		broadcast(new NodeCreated($entry));
+
 		return response()->json($entry);
 	}
 
@@ -54,6 +59,9 @@ class ImageController extends Controller
 		$entry = BoardNode::where('id', $id)->where('type', 'image')->first();
 		Storage::delete('public' . $entry->path);
 		$entry->delete();
+
+		broadcast(new NodeRemoved($entry));
+		
 		return response()->json($entry);
 	}
 
@@ -91,6 +99,8 @@ class ImageController extends Controller
 			$entry->rotation = floatval($rotation);
 
 		$entry->save();
+
+		broadcast(new NodeTransform($entry));
 
 		return response()->json($entry);
 	}

@@ -23,6 +23,7 @@
 
 
 <script>
+import Echo from 'laravel-echo';
 import { ImageUploader } from './ImageUploader.js';
 
 export default {
@@ -49,11 +50,51 @@ export default {
 		}
 	},
 	created() {
+		window.Echo = new Echo({
+			broadcaster: process.env.MIX_PUSHER_APP_BROADCASTER,
+			key: process.env.MIX_PUSHER_APP_KEY,
+			cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+			wsHost: process.env.MIX_PUSHER_APP_WS_HOST,
+			wsPort: parseInt(process.env.MIX_PUSHER_APP_WS_PORT),
+			forceTLS: process.env.MIX_PUSHER_APP_FORCE_TLS == 'true' ? true : false,
+			disableStats: process.env.MIX_PUSHER_APP_DISABLE_STATS == 'true' ? true : false,
+		});
+
 		Vue.prototype.$boardInstance = this;
 	},
 	mounted() {
 		Vue.prototype.$konvaTransformer = this.transformer;
 		this.SetupScreenLocation();
+
+		window.Echo.join('board')
+			.here((users) => {
+				this.$notify({
+					title: 'С подключением',
+					text: 'Вы успешно подключились к серверу',
+					type: 'success'
+				});
+			})
+			.joining((user) => {
+				this.$notify({
+					title: 'Новый участник',
+					text: `${user.name} присоединился к доске`,
+					type: 'success'
+				});
+			})
+			.leaving((user) => {
+				this.$notify({
+					title: 'Участник отключился',
+					text: `${user.name} ушёл с доски`,
+					type: 'warn'
+				});
+			})
+			.error((error) => {
+				this.$notify({
+					title: 'Ошибка подключения',
+					text: error,
+					type: 'error'
+				});
+			});
 	},
 	methods: {
 		DragEndHandler: function(e) {

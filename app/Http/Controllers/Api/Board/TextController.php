@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BoardNode;
 use Illuminate\Support\Str;
+use App\Events\NodeTransform;
+use App\Events\NodeCreated;
+use App\Events\NodeRemoved;
 
 class TextController extends Controller
 {
@@ -46,6 +49,8 @@ class TextController extends Controller
 
 		$entry = BoardNode::create($createData);
 
+		broadcast(new NodeCreated($entry));
+
 		return response()->json($entry);
 	}
 
@@ -53,6 +58,9 @@ class TextController extends Controller
 	{
 		$entry = BoardNode::where('id', $id)->where('type', 'text')->first();
 		$entry->delete();
+		
+		broadcast(new NodeRemoved($entry));
+
 		return response()->json($entry);
 	}
 
@@ -96,6 +104,8 @@ class TextController extends Controller
 			]);
 
 		$entry->save();
+
+		broadcast(new NodeTransform($entry));
 
 		return response()->json($entry);
 	}

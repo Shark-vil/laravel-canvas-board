@@ -1,7 +1,6 @@
 class ImageUploader {
 	constructor(konvaStage) {
 		this.konvaStage = konvaStage;
-		console.log(this.konvaStage);
 	}
 
 	Upload(file, successCallback, errorCallback) {
@@ -33,13 +32,6 @@ class ImageUploader {
 				let newWidth = scaleX * img.width;
 				let newHeight = scaleY * img.height;
 
-				console.log('W: ' + img.width + ', ' + newWidth);
-				console.log('H: ' + img.height + ', ' + newHeight);
-				console.log('X: ' + stagePosition.x + ', Y: ' + stagePosition.y);
-
-				// posX = posX + (konvaStage.width() / 2);
-				// posY = posY + (konvaStage.height() / 2);
-
 				posX -= newWidth / 2;
 				posY -= newHeight / 2;
 
@@ -59,9 +51,6 @@ class ImageUploader {
 						'Content-Type': 'multipart/form-data'
 					}
 				}).then(response => {
-					let entry = response.data;
-					console.log(response);
-
 					if (typeof successCallback == 'function') {
 						successCallback(response);
 					}
@@ -81,4 +70,4 @@ class ImageUploader {
 	}
 }
 
-module.exports.ImageUploader = ImageUploader
+module.exports.ImageUploader = ImageUploader;

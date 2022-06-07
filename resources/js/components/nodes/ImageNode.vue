@@ -4,7 +4,6 @@
 
 <script>
 import SuperGif from 'libgif/libgif';
-// import RubbableGif from 'libgif/rubbable';
 
 export default {
 	props: [
@@ -60,7 +59,6 @@ export default {
 	},
 	mounted() {
 		if (typeof this.url == 'string') {
-			// const konvaNode = this.konvaNode;
 			const imageAddress = window.APP_URL + '/storage' + this.url;
 			const extension = imageAddress.split('.').pop();
 			const image = new window.Image();
@@ -70,17 +68,6 @@ export default {
 				if (extension == 'gif') {
 					this.GifLoader(image);
 					cacheImageElement.remove();
-
-					/*
-					this.gifCanvas = document.createElement('canvas');
-					this.nodeConfig.image = this.gifCanvas;
-
-					setTimeout(() => {
-						this.gifCanvas.width = konvaNode.width();
-						this.gifCanvas.height = konvaNode.height();
-						gifler(imageAddress).frames(this.gifCanvas, this.GifRenderer, true);
-					}, 100);
-					*/
 				} else {
 					this.nodeConfig.image = image;
 				}
@@ -146,26 +133,6 @@ export default {
 
 			anim();
 		},
-		/*
-		GifRenderer(ctx, frame) {
-			const konvaNode = this.konvaNode;
-			if (konvaNode == undefined) return;
-
-			const layer = konvaNode.getLayer();
-			if (layer == undefined) return;
-
-			// this.gifCanvas.width = frame.width;
-			// this.gifCanvas.height = frame.height;
-
-			const width = this.gifCanvas.width;
-			const height = this.gifCanvas.height;
-
-			ctx.clearRect(0, 0, width, height);
-			ctx.drawImage(frame.buffer, frame.x, frame.y);
-
-			layer.draw();
-		}
-		*/
 	}
 }
 </script>
