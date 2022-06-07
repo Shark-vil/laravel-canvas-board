@@ -15,6 +15,9 @@ window.Vue = require('vue').default;
 import VueKonva from 'vue-konva';
 Vue.use(VueKonva);
 
+import Notifications from 'vue-notification';
+Vue.use(Notifications);
+
 /**
 * The following block of code may be used to automatically register your
 * Vue components. It will recursively scan this directory for the Vue

@@ -16,6 +16,8 @@
 				<board-transformer ref="transformer" />
 			</v-layer>
 		</v-stage>
+
+		<notifications position="bottom right" />
 	</div>
 </template>
 
@@ -79,9 +81,17 @@ export default {
 			const file = e.dataTransfer.files[0];
 			const uploader = new ImageUploader(this.konvaStage);
 			uploader.Upload(file, (response) => {
-				const entry = response.data;
-				if (entry == undefined) return;
-				console.log(entry);
+				this.$notify({
+					title: `Загрузка: ${file.name}`,
+					text: 'Файл загружкен',
+					type: 'success'
+				});
+			}, (error) => {
+				this.$notify({
+					title: `Загрузка: ${file.name}`,
+					text: 'Ошибка загрузки файла',
+					type: 'error'
+				});
 			});
 		},
 		SetupScreenLocation: function() {

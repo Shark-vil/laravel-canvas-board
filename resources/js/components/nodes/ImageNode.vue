@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import { Task } from '../task';
+import SuperGif from 'libgif/libgif';
+// import RubbableGif from 'libgif/rubbable';
 
 export default {
 	props: [
@@ -31,7 +32,6 @@ export default {
 				uniqueId: -1,
 				typeId: '',
 				name: '',
-				text: '',
 				image: '',
 				width: 100,
 				height: 100,
@@ -60,15 +60,27 @@ export default {
 	},
 	mounted() {
 		if (typeof this.url == 'string') {
+			// const konvaNode = this.konvaNode;
 			const imageAddress = window.APP_URL + '/storage' + this.url;
 			const extension = imageAddress.split('.').pop();
 			const image = new window.Image();
+			let cacheImageElement = document.body.appendChild(image);
 
 			image.onload = () => {
 				if (extension == 'gif') {
+					this.GifLoader(image);
+					cacheImageElement.remove();
+
+					/*
 					this.gifCanvas = document.createElement('canvas');
 					this.nodeConfig.image = this.gifCanvas;
-					gifler(imageAddress).frames(this.gifCanvas, this.onDrawGif);
+
+					setTimeout(() => {
+						this.gifCanvas.width = konvaNode.width();
+						this.gifCanvas.height = konvaNode.height();
+						gifler(imageAddress).frames(this.gifCanvas, this.GifRenderer, true);
+					}, 100);
+					*/
 				} else {
 					this.nodeConfig.image = image;
 				}
@@ -88,9 +100,72 @@ export default {
 		},
 		Delete: async function() {
 			await axios.post('/api/board/image/delete/' + this.id).then(response => {
-				console.log('/api/board/image/delete/' + this.id, response);
+				this.$notify({
+					title: `Удаление картинки: ${this.id}`,
+					text: 'Картинка удалена',
+					type: 'success'
+				});
+			}).catch((error) => {
+				this.$notify({
+					title: `Удаление картинки: ${this.id}`,
+					text: 'Не удалось удалить картинку',
+					type: 'error'
+				});
 			});
 		},
+		GifLoader: function(templateImage) {
+			const konvaNode = this.konvaNode;
+			if (konvaNode == undefined) return;
+
+			const layer = konvaNode.getLayer();
+			if (layer == undefined) return;
+
+			const gif = new SuperGif({
+				gif: templateImage,
+				progressbar_height: 100,
+				auto_play: true,
+				loop_mode: true,
+				draw_while_loading: true,
+			});
+
+			gif.load();
+
+			const gif_canvas = gif.get_canvas();
+			const canvas = gif_canvas.cloneNode();
+			const ctx = canvas.getContext('2d');
+
+			this.gifCanvas = canvas;
+			this.nodeConfig.image = canvas;
+
+			function anim(t) {
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.drawImage(gif_canvas, 0, 0);
+					layer.draw();
+					requestAnimationFrame(anim);
+			};
+
+			anim();
+		},
+		/*
+		GifRenderer(ctx, frame) {
+			const konvaNode = this.konvaNode;
+			if (konvaNode == undefined) return;
+
+			const layer = konvaNode.getLayer();
+			if (layer == undefined) return;
+
+			// this.gifCanvas.width = frame.width;
+			// this.gifCanvas.height = frame.height;
+
+			const width = this.gifCanvas.width;
+			const height = this.gifCanvas.height;
+
+			ctx.clearRect(0, 0, width, height);
+			ctx.drawImage(frame.buffer, frame.x, frame.y);
+
+			layer.draw();
+		}
+		*/
 	}
 }
 </script>

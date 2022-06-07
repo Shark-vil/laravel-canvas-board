@@ -79,22 +79,30 @@ export default {
 			konvaNode.rotation(entry.rotation);
 		},
 		DbUpdate: function(text) {
-			new Task(async () => {
-				try {
-					await axios.post('/api/board/text/update/' + this.id, { text: text },
-					{
-						headers: { 'Content-Type': 'application/json' }
-					}).then((response) => {
-						console.log('/api/board/text/update/' + this.id, response);
-					});
-				} catch(ex) {
-					console.error(ex);
-				}
-			}).Start()
+			axios.post('/api/board/text/update/' + this.id, { text: text },
+			{
+				headers: { 'Content-Type': 'application/json' }
+			}).catch((error) => {
+				this.$notify({
+					title: `Обновление текста: ${this.id}`,
+					text: 'Не удалось обновить текст',
+					type: 'error'
+				});
+			});
 		},
 		Delete: async function() {
 			await axios.post('/api/board/text/delete/' + this.id).then(response => {
-				console.log('/api/board/text/delete/' + this.id, response);
+				this.$notify({
+					title: `Удаление текста: ${this.id}`,
+					text: 'Текст удалён',
+					type: 'success'
+				});
+			}).catch((error) => {
+				this.$notify({
+					title: `Удаление текста: ${this.id}`,
+					text: 'Не удалось удалить текст',
+					type: 'error'
+				});
 			});
 		},
 		EditMode: function () {

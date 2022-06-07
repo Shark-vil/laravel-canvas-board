@@ -8200,6 +8200,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
@@ -8253,12 +8255,22 @@ __webpack_require__.r(__webpack_exports__);
     // 	this.transformer.NodeRemove();
     // },
     UploadImage: function UploadImage(e) {
+      var _this = this;
+
       var file = e.dataTransfer.files[0];
       var uploader = new _ImageUploader_js__WEBPACK_IMPORTED_MODULE_0__.ImageUploader(this.konvaStage);
       uploader.Upload(file, function (response) {
-        var entry = response.data;
-        if (entry == undefined) return;
-        console.log(entry);
+        _this.$notify({
+          title: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430: ".concat(file.name),
+          text: 'Файл загружкен',
+          type: 'success'
+        });
+      }, function (error) {
+        _this.$notify({
+          title: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430: ".concat(file.name),
+          text: 'Ошибка загрузки файла',
+          type: 'error'
+        });
       });
     },
     SetupScreenLocation: function SetupScreenLocation() {
@@ -8719,7 +8731,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../task */ "./resources/js/components/task.js");
+/* harmony import */ var libgif_libgif__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! libgif/libgif */ "./node_modules/libgif/libgif.js");
+/* harmony import */ var libgif_libgif__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(libgif_libgif__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return generator._invoke = function (innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; }(innerFn, self, context), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; this._invoke = function (method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); }; } function maybeInvokeDelegate(delegate, context) { var method = delegate.iterator[context.method]; if (undefined === method) { if (context.delegate = null, "throw" === context.method) { if (delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method)) return ContinueSentinel; context.method = "throw", context.arg = new TypeError("The iterator does not provide a 'throw' method"); } return ContinueSentinel; } var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) { if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; } return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, define(Gp, "constructor", GeneratorFunctionPrototype), define(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (object) { var keys = []; for (var key in object) { keys.push(key); } return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) { "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); } }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
@@ -8732,6 +8745,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+ // import RubbableGif from 'libgif/rubbable';
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['id', 'typeId', 'name', 'width', 'height', 'x', 'y', 'rotation', 'url', 'scaleX', 'scaleY'],
@@ -8747,7 +8761,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         uniqueId: -1,
         typeId: '',
         name: '',
-        text: '',
         image: '',
         width: 100,
         height: 100,
@@ -8777,15 +8790,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     if (typeof this.url == 'string') {
+      // const konvaNode = this.konvaNode;
       var imageAddress = window.APP_URL + '/storage' + this.url;
       var extension = imageAddress.split('.').pop();
       var image = new window.Image();
+      var cacheImageElement = document.body.appendChild(image);
 
       image.onload = function () {
         if (extension == 'gif') {
-          _this.gifCanvas = document.createElement('canvas');
-          _this.nodeConfig.image = _this.gifCanvas;
-          gifler(imageAddress).frames(_this.gifCanvas, _this.onDrawGif);
+          _this.GifLoader(image);
+
+          cacheImageElement.remove();
+          /*
+          this.gifCanvas = document.createElement('canvas');
+          this.nodeConfig.image = this.gifCanvas;
+          		setTimeout(() => {
+          	this.gifCanvas.width = konvaNode.width();
+          	this.gifCanvas.height = konvaNode.height();
+          	gifler(imageAddress).frames(this.gifCanvas, this.GifRenderer, true);
+          }, 100);
+          */
         } else {
           _this.nodeConfig.image = image;
         }
@@ -8813,7 +8837,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return axios.post('/api/board/image/delete/' + this.id).then(function (response) {
-                  console.log('/api/board/image/delete/' + _this2.id, response);
+                  _this2.$notify({
+                    title: "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435 \u043A\u0430\u0440\u0442\u0438\u043D\u043A\u0438: ".concat(_this2.id),
+                    text: 'Картинка удалена',
+                    type: 'success'
+                  });
+                })["catch"](function (error) {
+                  _this2.$notify({
+                    title: "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435 \u043A\u0430\u0440\u0442\u0438\u043D\u043A\u0438: ".concat(_this2.id),
+                    text: 'Не удалось удалить картинку',
+                    type: 'error'
+                  });
                 });
 
               case 2:
@@ -8829,7 +8863,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return Delete;
-    }()
+    }(),
+    GifLoader: function GifLoader(templateImage) {
+      var konvaNode = this.konvaNode;
+      if (konvaNode == undefined) return;
+      var layer = konvaNode.getLayer();
+      if (layer == undefined) return;
+      var gif = new (libgif_libgif__WEBPACK_IMPORTED_MODULE_0___default())({
+        gif: templateImage,
+        progressbar_height: 100,
+        auto_play: true,
+        loop_mode: true,
+        draw_while_loading: true
+      });
+      gif.load();
+      var gif_canvas = gif.get_canvas();
+      var canvas = gif_canvas.cloneNode();
+      var ctx = canvas.getContext('2d');
+      this.gifCanvas = canvas;
+      this.nodeConfig.image = canvas;
+
+      function anim(t) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(gif_canvas, 0, 0);
+        layer.draw();
+        requestAnimationFrame(anim);
+      }
+
+      ;
+      anim();
+    }
+    /*
+    GifRenderer(ctx, frame) {
+    	const konvaNode = this.konvaNode;
+    	if (konvaNode == undefined) return;
+    			const layer = konvaNode.getLayer();
+    	if (layer == undefined) return;
+    			// this.gifCanvas.width = frame.width;
+    	// this.gifCanvas.height = frame.height;
+    			const width = this.gifCanvas.width;
+    	const height = this.gifCanvas.height;
+    			ctx.clearRect(0, 0, width, height);
+    	ctx.drawImage(frame.buffer, frame.x, frame.y);
+    			layer.draw();
+    }
+    */
+
   }
 });
 
@@ -8918,59 +8997,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     DbUpdate: function DbUpdate(text) {
       var _this = this;
 
-      new _task__WEBPACK_IMPORTED_MODULE_0__.Task( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      axios.post('/api/board/text/update/' + this.id, {
+        text: text
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })["catch"](function (error) {
+        _this.$notify({
+          title: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0442\u0435\u043A\u0441\u0442\u0430: ".concat(_this.id),
+          text: 'Не удалось обновить текст',
+          type: 'error'
+        });
+      });
+    },
+    Delete: function () {
+      var _Delete = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var _this2 = this;
+
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.post('/api/board/text/update/' + _this.id, {
-                  text: text
-                }, {
-                  headers: {
-                    'Content-Type': 'application/json'
-                  }
-                }).then(function (response) {
-                  console.log('/api/board/text/update/' + _this.id, response);
-                });
-
-              case 3:
-                _context.next = 8;
-                break;
-
-              case 5:
-                _context.prev = 5;
-                _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
-
-              case 8:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 5]]);
-      }))).Start();
-    },
-    Delete: function () {
-      var _Delete = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var _this2 = this;
-
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
+                _context.next = 2;
                 return axios.post('/api/board/text/delete/' + this.id).then(function (response) {
-                  console.log('/api/board/text/delete/' + _this2.id, response);
+                  _this2.$notify({
+                    title: "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435 \u0442\u0435\u043A\u0441\u0442\u0430: ".concat(_this2.id),
+                    text: 'Текст удалён',
+                    type: 'success'
+                  });
+                })["catch"](function (error) {
+                  _this2.$notify({
+                    title: "\u0423\u0434\u0430\u043B\u0435\u043D\u0438\u0435 \u0442\u0435\u043A\u0441\u0442\u0430: ".concat(_this2.id),
+                    text: 'Не удалось удалить текст',
+                    type: 'error'
+                  });
                 });
 
               case 2:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee, this);
       }));
 
       function Delete() {
@@ -9135,6 +9204,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
   },
+  created: function created() {
+    window.addEventListener('wheel', this.UpdateCloseButtonPosition);
+  },
+  destroyed: function destroyed() {
+    window.removeEventListener('wheel', this.UpdateCloseButtonPosition);
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -9150,6 +9225,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     DbUpdate: function DbUpdate(selectedNode) {
+      var _this2 = this;
+
       var attrs = selectedNode.attrs;
       var typeId = attrs.typeId;
       var uniqueId = attrs.uniqueId;
@@ -9160,26 +9237,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var scaleX = selectedNode.scaleX();
       var scaleY = selectedNode.scaleY();
       var rotation = selectedNode.rotation();
-
-      try {
-        axios.post("/api/board/".concat(typeId, "/update/").concat(uniqueId), {
-          x: x,
-          y: y,
-          width: width,
-          height: height,
-          scaleX: scaleX,
-          scaleY: scaleY,
-          rotation: rotation
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(function (response) {
-          console.log(response.data);
+      axios.post("/api/board/".concat(typeId, "/update/").concat(uniqueId), {
+        x: x,
+        y: y,
+        width: width,
+        height: height,
+        scaleX: scaleX,
+        scaleY: scaleY,
+        rotation: rotation
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })["catch"](function (error) {
+        _this2.$notify({
+          title: "\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u043E\u0437\u0438\u0446\u0438\u0438: ".concat(uniqueId),
+          text: "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u043F\u043E\u0437\u0438\u0446\u0438\u044E \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u0430 \"".concat(typeId, "\""),
+          type: 'error'
         });
-      } catch (ex) {
-        console.error(ex);
-      }
+      });
     },
     NodeRemove: function () {
       var _NodeRemove = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -9275,9 +9351,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     UpdateCloseButtonPosition: function UpdateCloseButtonPosition() {
       var closeButton = this.$refs.closeButton.getNode();
-      var closeButtonText = this.$refs.closeButtonText.getNode();
-      var x = this.konvaNode.width() / 2;
-      var y = this.konvaNode.height() + closeButton.radius() + 15;
+      var closeButtonText = this.$refs.closeButtonText.getNode(); // const width = this.konvaNode.width() / this.konvaNode.scaleX();
+      // const heihgt = this.konvaNode.height() / this.konvaNode.scaleY();
+
+      var width = this.konvaNode.width();
+      var heihgt = this.konvaNode.height();
+      var x = width / 2;
+      var y = heihgt + closeButton.radius() + 15;
       closeButton.x(x);
       closeButton.y(y);
       closeButtonText.x(x - closeButtonText.width() / 2);
@@ -9322,6 +9402,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
 /* harmony import */ var vue_konva__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-konva */ "./node_modules/vue-konva/umd/vue-konva.js");
 /* harmony import */ var vue_konva__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_konva__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-notification */ "./node_modules/vue-notification/dist/index.js");
+/* harmony import */ var vue_notification__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_notification__WEBPACK_IMPORTED_MODULE_2__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -9335,6 +9417,8 @@ alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 
 Vue.use((vue_konva__WEBPACK_IMPORTED_MODULE_1___default()));
+
+Vue.use((vue_notification__WEBPACK_IMPORTED_MODULE_2___default()));
 /**
 * The following block of code may be used to automatically register your
 * Vue components. It will recursively scan this directory for the Vue
@@ -14903,6 +14987,1007 @@ module.exports = function (cssWithMappingToString) {
 
   return list;
 };
+
+/***/ }),
+
+/***/ "./node_modules/libgif/libgif.js":
+/*!***************************************!*\
+  !*** ./node_modules/libgif/libgif.js ***!
+  \***************************************/
+/***/ (function(module, exports) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+	SuperGif
+
+	Example usage:
+
+		<img src="./example1_preview.gif" rel:animated_src="./example1.gif" width="360" height="360" rel:auto_play="1" />
+
+		<script type="text/javascript">
+			$$('img').each(function (img_tag) {
+				if (/.*\.gif/.test(img_tag.src)) {
+					var rub = new SuperGif({ gif: img_tag } );
+					rub.load();
+				}
+			});
+		</script>
+
+	Image tag attributes:
+
+		rel:animated_src -	If this url is specified, it's loaded into the player instead of src.
+							This allows a preview frame to be shown until animated gif data is streamed into the canvas
+
+		rel:auto_play -		Defaults to 1 if not specified. If set to zero, a call to the play() method is needed
+
+	Constructor options args
+
+		gif 				Required. The DOM element of an img tag.
+		loop_mode			Optional. Setting this to false will force disable looping of the gif.
+		auto_play 			Optional. Same as the rel:auto_play attribute above, this arg overrides the img tag info.
+		max_width			Optional. Scale images over max_width down to max_width. Helpful with mobile.
+ 		on_end				Optional. Add a callback for when the gif reaches the end of a single loop (one iteration). The first argument passed will be the gif HTMLElement.
+		loop_delay			Optional. The amount of time to pause (in ms) after each single loop (iteration).
+		draw_while_loading	Optional. Determines whether the gif will be drawn to the canvas whilst it is loaded.
+		show_progress_bar	Optional. Only applies when draw_while_loading is set to true.
+
+	Instance methods
+
+		// loading
+		load( callback )		Loads the gif specified by the src or rel:animated_src sttributie of the img tag into a canvas element and then calls callback if one is passed
+		load_url( src, callback )	Loads the gif file specified in the src argument into a canvas element and then calls callback if one is passed
+
+		// play controls
+		play -				Start playing the gif
+		pause -				Stop playing the gif
+		move_to(i) -		Move to frame i of the gif
+		move_relative(i) -	Move i frames ahead (or behind if i < 0)
+
+		// getters
+		get_canvas			The canvas element that the gif is playing in. Handy for assigning event handlers to.
+		get_playing			Whether or not the gif is currently playing
+		get_loading			Whether or not the gif has finished loading/parsing
+		get_auto_play		Whether or not the gif is set to play automatically
+		get_length			The number of frames in the gif
+		get_current_frame	The index of the currently displayed frame of the gif
+		get_frames	        An array containing the data for all parsed frames
+		get_duration	    Returns the duration of the gif in hundredths of a second (standard for GIF spec)
+		get_duration_ms	    Returns the duration of the gif in milliseconds
+
+		For additional customization (viewport inside iframe) these params may be passed:
+		c_w, c_h - width and height of canvas
+		vp_t, vp_l, vp_ w, vp_h - top, left, width and height of the viewport
+
+		A bonus: few articles to understand what is going on
+			http://enthusiasms.org/post/16976438906
+			http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
+			http://humpy77.deviantart.com/journal/Frame-Delay-Times-for-Animated-GIFs-214150546
+
+*/
+(function (root, factory) {
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {}
+}(this, function () {
+    // Generic functions
+    var bitsToNum = function (ba) {
+        return ba.reduce(function (s, n) {
+            return s * 2 + n;
+        }, 0);
+    };
+
+    var byteToBitArr = function (bite) {
+        var a = [];
+        for (var i = 7; i >= 0; i--) {
+            a.push( !! (bite & (1 << i)));
+        }
+        return a;
+    };
+
+    // Stream
+    /**
+     * @constructor
+     */
+    // Make compiler happy.
+    var Stream = function (data) {
+        this.data = data;
+        this.len = this.data.length;
+        this.pos = 0;
+
+        this.readByte = function () {
+            if (this.pos >= this.data.length) {
+                throw new Error('Attempted to read past end of stream.');
+            }
+            if (data instanceof Uint8Array)
+                return data[this.pos++];
+            else
+                return data.charCodeAt(this.pos++) & 0xFF;
+        };
+
+        this.readBytes = function (n) {
+            var bytes = [];
+            for (var i = 0; i < n; i++) {
+                bytes.push(this.readByte());
+            }
+            return bytes;
+        };
+
+        this.read = function (n) {
+            var s = '';
+            for (var i = 0; i < n; i++) {
+                s += String.fromCharCode(this.readByte());
+            }
+            return s;
+        };
+
+        this.readUnsigned = function () { // Little-endian.
+            var a = this.readBytes(2);
+            return (a[1] << 8) + a[0];
+        };
+    };
+
+    var lzwDecode = function (minCodeSize, data) {
+        // TODO: Now that the GIF parser is a bit different, maybe this should get an array of bytes instead of a String?
+        var pos = 0; // Maybe this streaming thing should be merged with the Stream?
+        var readCode = function (size) {
+            var code = 0;
+            for (var i = 0; i < size; i++) {
+                if (data.charCodeAt(pos >> 3) & (1 << (pos & 7))) {
+                    code |= 1 << i;
+                }
+                pos++;
+            }
+            return code;
+        };
+
+        var output = [];
+
+        var clearCode = 1 << minCodeSize;
+        var eoiCode = clearCode + 1;
+
+        var codeSize = minCodeSize + 1;
+
+        var dict = [];
+
+        var clear = function () {
+            dict = [];
+            codeSize = minCodeSize + 1;
+            for (var i = 0; i < clearCode; i++) {
+                dict[i] = [i];
+            }
+            dict[clearCode] = [];
+            dict[eoiCode] = null;
+
+        };
+
+        var code;
+        var last;
+
+        while (true) {
+            last = code;
+            code = readCode(codeSize);
+
+            if (code === clearCode) {
+                clear();
+                continue;
+            }
+            if (code === eoiCode) break;
+
+            if (code < dict.length) {
+                if (last !== clearCode) {
+                    dict.push(dict[last].concat(dict[code][0]));
+                }
+            }
+            else {
+                if (code !== dict.length) throw new Error('Invalid LZW code.');
+                dict.push(dict[last].concat(dict[last][0]));
+            }
+            output.push.apply(output, dict[code]);
+
+            if (dict.length === (1 << codeSize) && codeSize < 12) {
+                // If we're at the last code and codeSize is 12, the next code will be a clearCode, and it'll be 12 bits long.
+                codeSize++;
+            }
+        }
+
+        // I don't know if this is technically an error, but some GIFs do it.
+        //if (Math.ceil(pos / 8) !== data.length) throw new Error('Extraneous LZW bytes.');
+        return output;
+    };
+
+
+    // The actual parsing; returns an object with properties.
+    var parseGIF = function (st, handler) {
+        handler || (handler = {});
+
+        // LZW (GIF-specific)
+        var parseCT = function (entries) { // Each entry is 3 bytes, for RGB.
+            var ct = [];
+            for (var i = 0; i < entries; i++) {
+                ct.push(st.readBytes(3));
+            }
+            return ct;
+        };
+
+        var readSubBlocks = function () {
+            var size, data;
+            data = '';
+            do {
+                size = st.readByte();
+                data += st.read(size);
+            } while (size !== 0);
+            return data;
+        };
+
+        var parseHeader = function () {
+            var hdr = {};
+            hdr.sig = st.read(3);
+            hdr.ver = st.read(3);
+            if (hdr.sig !== 'GIF') throw new Error('Not a GIF file.'); // XXX: This should probably be handled more nicely.
+            hdr.width = st.readUnsigned();
+            hdr.height = st.readUnsigned();
+
+            var bits = byteToBitArr(st.readByte());
+            hdr.gctFlag = bits.shift();
+            hdr.colorRes = bitsToNum(bits.splice(0, 3));
+            hdr.sorted = bits.shift();
+            hdr.gctSize = bitsToNum(bits.splice(0, 3));
+
+            hdr.bgColor = st.readByte();
+            hdr.pixelAspectRatio = st.readByte(); // if not 0, aspectRatio = (pixelAspectRatio + 15) / 64
+            if (hdr.gctFlag) {
+                hdr.gct = parseCT(1 << (hdr.gctSize + 1));
+            }
+            handler.hdr && handler.hdr(hdr);
+        };
+
+        var parseExt = function (block) {
+            var parseGCExt = function (block) {
+                var blockSize = st.readByte(); // Always 4
+                var bits = byteToBitArr(st.readByte());
+                block.reserved = bits.splice(0, 3); // Reserved; should be 000.
+                block.disposalMethod = bitsToNum(bits.splice(0, 3));
+                block.userInput = bits.shift();
+                block.transparencyGiven = bits.shift();
+
+                block.delayTime = st.readUnsigned();
+
+                block.transparencyIndex = st.readByte();
+
+                block.terminator = st.readByte();
+
+                handler.gce && handler.gce(block);
+            };
+
+            var parseComExt = function (block) {
+                block.comment = readSubBlocks();
+                handler.com && handler.com(block);
+            };
+
+            var parsePTExt = function (block) {
+                // No one *ever* uses this. If you use it, deal with parsing it yourself.
+                var blockSize = st.readByte(); // Always 12
+                block.ptHeader = st.readBytes(12);
+                block.ptData = readSubBlocks();
+                handler.pte && handler.pte(block);
+            };
+
+            var parseAppExt = function (block) {
+                var parseNetscapeExt = function (block) {
+                    var blockSize = st.readByte(); // Always 3
+                    block.unknown = st.readByte(); // ??? Always 1? What is this?
+                    block.iterations = st.readUnsigned();
+                    block.terminator = st.readByte();
+                    handler.app && handler.app.NETSCAPE && handler.app.NETSCAPE(block);
+                };
+
+                var parseUnknownAppExt = function (block) {
+                    block.appData = readSubBlocks();
+                    // FIXME: This won't work if a handler wants to match on any identifier.
+                    handler.app && handler.app[block.identifier] && handler.app[block.identifier](block);
+                };
+
+                var blockSize = st.readByte(); // Always 11
+                block.identifier = st.read(8);
+                block.authCode = st.read(3);
+                switch (block.identifier) {
+                    case 'NETSCAPE':
+                        parseNetscapeExt(block);
+                        break;
+                    default:
+                        parseUnknownAppExt(block);
+                        break;
+                }
+            };
+
+            var parseUnknownExt = function (block) {
+                block.data = readSubBlocks();
+                handler.unknown && handler.unknown(block);
+            };
+
+            block.label = st.readByte();
+            switch (block.label) {
+                case 0xF9:
+                    block.extType = 'gce';
+                    parseGCExt(block);
+                    break;
+                case 0xFE:
+                    block.extType = 'com';
+                    parseComExt(block);
+                    break;
+                case 0x01:
+                    block.extType = 'pte';
+                    parsePTExt(block);
+                    break;
+                case 0xFF:
+                    block.extType = 'app';
+                    parseAppExt(block);
+                    break;
+                default:
+                    block.extType = 'unknown';
+                    parseUnknownExt(block);
+                    break;
+            }
+        };
+
+        var parseImg = function (img) {
+            var deinterlace = function (pixels, width) {
+                // Of course this defeats the purpose of interlacing. And it's *probably*
+                // the least efficient way it's ever been implemented. But nevertheless...
+                var newPixels = new Array(pixels.length);
+                var rows = pixels.length / width;
+                var cpRow = function (toRow, fromRow) {
+                    var fromPixels = pixels.slice(fromRow * width, (fromRow + 1) * width);
+                    newPixels.splice.apply(newPixels, [toRow * width, width].concat(fromPixels));
+                };
+
+                // See appendix E.
+                var offsets = [0, 4, 2, 1];
+                var steps = [8, 8, 4, 2];
+
+                var fromRow = 0;
+                for (var pass = 0; pass < 4; pass++) {
+                    for (var toRow = offsets[pass]; toRow < rows; toRow += steps[pass]) {
+                        cpRow(toRow, fromRow)
+                        fromRow++;
+                    }
+                }
+
+                return newPixels;
+            };
+
+            img.leftPos = st.readUnsigned();
+            img.topPos = st.readUnsigned();
+            img.width = st.readUnsigned();
+            img.height = st.readUnsigned();
+
+            var bits = byteToBitArr(st.readByte());
+            img.lctFlag = bits.shift();
+            img.interlaced = bits.shift();
+            img.sorted = bits.shift();
+            img.reserved = bits.splice(0, 2);
+            img.lctSize = bitsToNum(bits.splice(0, 3));
+
+            if (img.lctFlag) {
+                img.lct = parseCT(1 << (img.lctSize + 1));
+            }
+
+            img.lzwMinCodeSize = st.readByte();
+
+            var lzwData = readSubBlocks();
+
+            img.pixels = lzwDecode(img.lzwMinCodeSize, lzwData);
+
+            if (img.interlaced) { // Move
+                img.pixels = deinterlace(img.pixels, img.width);
+            }
+
+            handler.img && handler.img(img);
+        };
+
+        var parseBlock = function () {
+            var block = {};
+            block.sentinel = st.readByte();
+
+            switch (String.fromCharCode(block.sentinel)) { // For ease of matching
+                case '!':
+                    block.type = 'ext';
+                    parseExt(block);
+                    break;
+                case ',':
+                    block.type = 'img';
+                    parseImg(block);
+                    break;
+                case ';':
+                    block.type = 'eof';
+                    handler.eof && handler.eof(block);
+                    break;
+                default:
+                    throw new Error('Unknown block: 0x' + block.sentinel.toString(16)); // TODO: Pad this with a 0.
+            }
+
+            if (block.type !== 'eof') setTimeout(parseBlock, 0);
+        };
+
+        var parse = function () {
+            parseHeader();
+            setTimeout(parseBlock, 0);
+        };
+
+        parse();
+    };
+
+    var SuperGif = function ( opts ) {
+        var options = {
+            //viewport position
+            vp_l: 0,
+            vp_t: 0,
+            vp_w: null,
+            vp_h: null,
+            //canvas sizes
+            c_w: null,
+            c_h: null
+        };
+        for (var i in opts ) { options[i] = opts[i] }
+        if (options.vp_w && options.vp_h) options.is_vp = true;
+
+        var stream;
+        var hdr;
+
+        var loadError = null;
+        var loading = false;
+
+        var transparency = null;
+        var delay = null;
+        var disposalMethod = null;
+        var disposalRestoreFromIdx = null;
+        var lastDisposalMethod = null;
+        var frame = null;
+        var lastImg = null;
+
+        var playing = true;
+        var forward = true;
+
+        var ctx_scaled = false;
+
+        var frames = [];
+        var frameOffsets = []; // elements have .x and .y properties
+
+        var gif = options.gif;
+        if (typeof options.auto_play == 'undefined')
+            options.auto_play = (!gif.getAttribute('rel:auto_play') || gif.getAttribute('rel:auto_play') == '1');
+
+        var onEndListener = (options.hasOwnProperty('on_end') ? options.on_end : null);
+        var loopDelay = (options.hasOwnProperty('loop_delay') ? options.loop_delay : 0);
+        var overrideLoopMode = (options.hasOwnProperty('loop_mode') ? options.loop_mode : 'auto');
+        var drawWhileLoading = (options.hasOwnProperty('draw_while_loading') ? options.draw_while_loading : true);
+        var showProgressBar = drawWhileLoading ? (options.hasOwnProperty('show_progress_bar') ? options.show_progress_bar : true) : false;
+        var progressBarHeight = (options.hasOwnProperty('progressbar_height') ? options.progressbar_height : 25);
+        var progressBarBackgroundColor = (options.hasOwnProperty('progressbar_background_color') ? options.progressbar_background_color : 'rgba(255,255,255,0.4)');
+        var progressBarForegroundColor = (options.hasOwnProperty('progressbar_foreground_color') ? options.progressbar_foreground_color : 'rgba(255,0,22,.8)');
+
+        var clear = function () {
+            transparency = null;
+            delay = null;
+            lastDisposalMethod = disposalMethod;
+            disposalMethod = null;
+            frame = null;
+        };
+
+        // XXX: There's probably a better way to handle catching exceptions when
+        // callbacks are involved.
+        var doParse = function () {
+            try {
+                parseGIF(stream, handler);
+            }
+            catch (err) {
+                doLoadError('parse');
+            }
+        };
+
+        var doText = function (text) {
+            toolbar.innerHTML = text; // innerText? Escaping? Whatever.
+            toolbar.style.visibility = 'visible';
+        };
+
+        var setSizes = function(w, h) {
+            canvas.width = w * get_canvas_scale();
+            canvas.height = h * get_canvas_scale();
+            toolbar.style.minWidth = ( w * get_canvas_scale() ) + 'px';
+
+            tmpCanvas.width = w;
+            tmpCanvas.height = h;
+            tmpCanvas.style.width = w + 'px';
+            tmpCanvas.style.height = h + 'px';
+            tmpCanvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
+        };
+
+        var setFrameOffset = function(frame, offset) {
+            if (!frameOffsets[frame]) {
+                frameOffsets[frame] = offset;
+                return;
+            }
+            if (typeof offset.x !== 'undefined') {
+                frameOffsets[frame].x = offset.x;
+            }
+            if (typeof offset.y !== 'undefined') {
+                frameOffsets[frame].y = offset.y;
+            }
+        };
+
+        var doShowProgress = function (pos, length, draw) {
+            if (draw && showProgressBar) {
+                var height = progressBarHeight;
+                var left, mid, top, width;
+                if (options.is_vp) {
+                    if (!ctx_scaled) {
+                        top = (options.vp_t + options.vp_h - height);
+                        height = height;
+                        left = options.vp_l;
+                        mid = left + (pos / length) * options.vp_w;
+                        width = canvas.width;
+                    } else {
+                        top = (options.vp_t + options.vp_h - height) / get_canvas_scale();
+                        height = height / get_canvas_scale();
+                        left = (options.vp_l / get_canvas_scale() );
+                        mid = left + (pos / length) * (options.vp_w / get_canvas_scale());
+                        width = canvas.width / get_canvas_scale();
+                    }
+                    //some debugging, draw rect around viewport
+                    if (false) { var w, h, l, t; }
+                }
+                else {
+                    top = (canvas.height - height) / (ctx_scaled ? get_canvas_scale() : 1);
+                    mid = ((pos / length) * canvas.width) / (ctx_scaled ? get_canvas_scale() : 1);
+                    width = canvas.width / (ctx_scaled ? get_canvas_scale() : 1 );
+                    height /= ctx_scaled ? get_canvas_scale() : 1;
+                }
+
+                ctx.fillStyle = progressBarBackgroundColor;
+                ctx.fillRect(mid, top, width - mid, height);
+
+                ctx.fillStyle = progressBarForegroundColor;
+                ctx.fillRect(0, top, mid, height);
+            }
+        };
+
+        var doLoadError = function (originOfError) {
+            var drawError = function () {
+                ctx.fillStyle = 'black';
+                ctx.fillRect(0, 0, options.c_w ? options.c_w : hdr.width, options.c_h ? options.c_h : hdr.height);
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 3;
+                ctx.moveTo(0, 0);
+                ctx.lineTo(options.c_w ? options.c_w : hdr.width, options.c_h ? options.c_h : hdr.height);
+                ctx.moveTo(0, options.c_h ? options.c_h : hdr.height);
+                ctx.lineTo(options.c_w ? options.c_w : hdr.width, 0);
+                ctx.stroke();
+            };
+
+            loadError = originOfError;
+            hdr = {
+                width: gif.width,
+                height: gif.height
+            }; // Fake header.
+            frames = [];
+            drawError();
+        };
+
+        var doHdr = function (_hdr) {
+            hdr = _hdr;
+            setSizes(hdr.width, hdr.height)
+        };
+
+        var doGCE = function (gce) {
+            pushFrame();
+            clear();
+            transparency = gce.transparencyGiven ? gce.transparencyIndex : null;
+            delay = gce.delayTime;
+            disposalMethod = gce.disposalMethod;
+            // We don't have much to do with the rest of GCE.
+        };
+
+        var pushFrame = function () {
+            if (!frame) return;
+            frames.push({
+                            data: frame.getImageData(0, 0, hdr.width, hdr.height),
+                            delay: delay
+                        });
+            frameOffsets.push({ x: 0, y: 0 });
+        };
+
+        var doImg = function (img) {
+            if (!frame) frame = tmpCanvas.getContext('2d');
+
+            var currIdx = frames.length;
+
+            //ct = color table, gct = global color table
+            var ct = img.lctFlag ? img.lct : hdr.gct; // TODO: What if neither exists?
+
+            /*
+            Disposal method indicates the way in which the graphic is to
+            be treated after being displayed.
+
+            Values :    0 - No disposal specified. The decoder is
+                            not required to take any action.
+                        1 - Do not dispose. The graphic is to be left
+                            in place.
+                        2 - Restore to background color. The area used by the
+                            graphic must be restored to the background color.
+                        3 - Restore to previous. The decoder is required to
+                            restore the area overwritten by the graphic with
+                            what was there prior to rendering the graphic.
+
+                            Importantly, "previous" means the frame state
+                            after the last disposal of method 0, 1, or 2.
+            */
+            if (currIdx > 0) {
+                if (lastDisposalMethod === 3) {
+                    // Restore to previous
+                    // If we disposed every frame including first frame up to this point, then we have
+                    // no composited frame to restore to. In this case, restore to background instead.
+                    if (disposalRestoreFromIdx !== null) {
+                    	frame.putImageData(frames[disposalRestoreFromIdx].data, 0, 0);
+                    } else {
+                    	frame.clearRect(lastImg.leftPos, lastImg.topPos, lastImg.width, lastImg.height);
+                    }
+                } else {
+                    disposalRestoreFromIdx = currIdx - 1;
+                }
+
+                if (lastDisposalMethod === 2) {
+                    // Restore to background color
+                    // Browser implementations historically restore to transparent; we do the same.
+                    // http://www.wizards-toolkit.org/discourse-server/viewtopic.php?f=1&t=21172#p86079
+                    frame.clearRect(lastImg.leftPos, lastImg.topPos, lastImg.width, lastImg.height);
+                }
+            }
+            // else, Undefined/Do not dispose.
+            // frame contains final pixel data from the last frame; do nothing
+
+            //Get existing pixels for img region after applying disposal method
+            var imgData = frame.getImageData(img.leftPos, img.topPos, img.width, img.height);
+
+            //apply color table colors
+            img.pixels.forEach(function (pixel, i) {
+                // imgData.data === [R,G,B,A,R,G,B,A,...]
+                if (pixel !== transparency) {
+                    imgData.data[i * 4 + 0] = ct[pixel][0];
+                    imgData.data[i * 4 + 1] = ct[pixel][1];
+                    imgData.data[i * 4 + 2] = ct[pixel][2];
+                    imgData.data[i * 4 + 3] = 255; // Opaque.
+                }
+            });
+
+            frame.putImageData(imgData, img.leftPos, img.topPos);
+
+            if (!ctx_scaled) {
+                ctx.scale(get_canvas_scale(),get_canvas_scale());
+                ctx_scaled = true;
+            }
+
+            // We could use the on-page canvas directly, except that we draw a progress
+            // bar for each image chunk (not just the final image).
+            if (drawWhileLoading) {
+                ctx.drawImage(tmpCanvas, 0, 0);
+                drawWhileLoading = options.auto_play;
+            }
+
+            lastImg = img;
+        };
+
+        var player = (function () {
+            var i = -1;
+            var iterationCount = 0;
+
+            var showingInfo = false;
+            var pinned = false;
+
+            /**
+             * Gets the index of the frame "up next".
+             * @returns {number}
+             */
+            var getNextFrameNo = function () {
+                var delta = (forward ? 1 : -1);
+                return (i + delta + frames.length) % frames.length;
+            };
+
+            var stepFrame = function (amount) { // XXX: Name is confusing.
+                i = i + amount;
+
+                putFrame();
+            };
+
+            var step = (function () {
+                var stepping = false;
+
+                var completeLoop = function () {
+                    if (onEndListener !== null)
+                        onEndListener(gif);
+                    iterationCount++;
+
+                    if (overrideLoopMode !== false || iterationCount < 0) {
+                        doStep();
+                    } else {
+                        stepping = false;
+                        playing = false;
+                    }
+                };
+
+                var doStep = function () {
+                    stepping = playing;
+                    if (!stepping) return;
+
+                    stepFrame(1);
+                    var delay = frames[i].delay * 10;
+                    if (!delay) delay = 100; // FIXME: Should this even default at all? What should it be?
+
+                    var nextFrameNo = getNextFrameNo();
+                    if (nextFrameNo === 0) {
+                        delay += loopDelay;
+                        setTimeout(completeLoop, delay);
+                    } else {
+                        setTimeout(doStep, delay);
+                    }
+                };
+
+                return function () {
+                    if (!stepping) setTimeout(doStep, 0);
+                };
+            }());
+
+            var putFrame = function () {
+                var offset;
+                i = parseInt(i, 10);
+
+                if (i > frames.length - 1){
+                    i = 0;
+                }
+
+                if (i < 0){
+                    i = 0;
+                }
+
+                offset = frameOffsets[i];
+
+                tmpCanvas.getContext("2d").putImageData(frames[i].data, offset.x, offset.y);
+                ctx.globalCompositeOperation = "copy";
+                ctx.drawImage(tmpCanvas, 0, 0);
+            };
+
+            var play = function () {
+                playing = true;
+                step();
+            };
+
+            var pause = function () {
+                playing = false;
+            };
+
+
+            return {
+                init: function () {
+                    if (loadError) return;
+
+                    if ( ! (options.c_w && options.c_h) ) {
+                        ctx.scale(get_canvas_scale(),get_canvas_scale());
+                    }
+
+                    if (options.auto_play) {
+                        step();
+                    }
+                    else {
+                        i = 0;
+                        putFrame();
+                    }
+                },
+                step: step,
+                play: play,
+                pause: pause,
+                playing: playing,
+                move_relative: stepFrame,
+                current_frame: function() { return i; },
+                length: function() { return frames.length },
+                move_to: function ( frame_idx ) {
+                    i = frame_idx;
+                    putFrame();
+                }
+            }
+        }());
+
+        var doDecodeProgress = function (draw) {
+            doShowProgress(stream.pos, stream.data.length, draw);
+        };
+
+        var doNothing = function () {};
+        /**
+         * @param{boolean=} draw Whether to draw progress bar or not; this is not idempotent because of translucency.
+         *                       Note that this means that the text will be unsynchronized with the progress bar on non-frames;
+         *                       but those are typically so small (GCE etc.) that it doesn't really matter. TODO: Do this properly.
+         */
+        var withProgress = function (fn, draw) {
+            return function (block) {
+                fn(block);
+                doDecodeProgress(draw);
+            };
+        };
+
+
+        var handler = {
+            hdr: withProgress(doHdr),
+            gce: withProgress(doGCE),
+            com: withProgress(doNothing),
+            // I guess that's all for now.
+            app: {
+                // TODO: Is there much point in actually supporting iterations?
+                NETSCAPE: withProgress(doNothing)
+            },
+            img: withProgress(doImg, true),
+            eof: function (block) {
+                //toolbar.style.display = '';
+                pushFrame();
+                doDecodeProgress(false);
+                if ( ! (options.c_w && options.c_h) ) {
+                    canvas.width = hdr.width * get_canvas_scale();
+                    canvas.height = hdr.height * get_canvas_scale();
+                }
+                player.init();
+                loading = false;
+                if (load_callback) {
+                    load_callback(gif);
+                }
+
+            }
+        };
+
+        var init = function () {
+            var parent = gif.parentNode;
+
+            var div = document.createElement('div');
+            canvas = document.createElement('canvas');
+            ctx = canvas.getContext('2d');
+            toolbar = document.createElement('div');
+
+            tmpCanvas = document.createElement('canvas');
+
+            div.width = canvas.width = gif.width;
+            div.height = canvas.height = gif.height;
+            toolbar.style.minWidth = gif.width + 'px';
+
+            div.className = 'jsgif';
+            toolbar.className = 'jsgif_toolbar';
+            div.appendChild(canvas);
+            div.appendChild(toolbar);
+
+            parent.insertBefore(div, gif);
+            parent.removeChild(gif);
+
+            if (options.c_w && options.c_h) setSizes(options.c_w, options.c_h);
+            initialized=true;
+        };
+
+        var get_canvas_scale = function() {
+            var scale;
+            if (options.max_width && hdr && hdr.width > options.max_width) {
+                scale = options.max_width / hdr.width;
+            }
+            else {
+                scale = 1;
+            }
+            return scale;
+        }
+
+        var canvas, ctx, toolbar, tmpCanvas;
+        var initialized = false;
+        var load_callback = false;
+
+        var load_setup = function(callback) {
+            if (loading) return false;
+            if (callback) load_callback = callback;
+            else load_callback = false;
+
+            loading = true;
+            frames = [];
+            clear();
+            disposalRestoreFromIdx = null;
+            lastDisposalMethod = null;
+            frame = null;
+            lastImg = null;
+
+            return true;
+        }
+
+        var calculateDuration = function() {
+            return frames.reduce(function(duration, frame) {
+                return duration + frame.delay;
+            }, 0);
+        }
+
+        return {
+            // play controls
+            play: player.play,
+            pause: player.pause,
+            move_relative: player.move_relative,
+            move_to: player.move_to,
+
+            // getters for instance vars
+            get_playing      : function() { return playing },
+            get_canvas       : function() { return canvas },
+            get_canvas_scale : function() { return get_canvas_scale() },
+            get_loading      : function() { return loading },
+            get_auto_play    : function() { return options.auto_play },
+            get_length       : function() { return player.length() },
+            get_frames       : function() { return frames },
+            get_duration     : function() { return calculateDuration() },
+            get_duration_ms  : function() { return calculateDuration() * 10 },
+            get_current_frame: function() { return player.current_frame() },
+            load_url: function(src,callback){
+                if (!load_setup(callback)) return;
+
+                var h = new XMLHttpRequest();
+                // new browsers (XMLHttpRequest2-compliant)
+                h.open('GET', src, true);
+
+                if ('overrideMimeType' in h) {
+                    h.overrideMimeType('text/plain; charset=x-user-defined');
+                }
+
+                // old browsers (XMLHttpRequest-compliant)
+                else if ('responseType' in h) {
+                    h.responseType = 'arraybuffer';
+                }
+
+                // IE9 (Microsoft.XMLHTTP-compliant)
+                else {
+                    h.setRequestHeader('Accept-Charset', 'x-user-defined');
+                }
+
+                h.onloadstart = function() {
+                    // Wait until connection is opened to replace the gif element with a canvas to avoid a blank img
+                    if (!initialized) init();
+                };
+                h.onload = function(e) {
+                    if (this.status != 200) {
+                        doLoadError('xhr - response');
+                    }
+                    // emulating response field for IE9
+                    if (!('response' in this)) {
+                        this.response = new VBArray(this.responseText).toArray().map(String.fromCharCode).join('');
+                    }
+                    var data = this.response;
+                    if (data.toString().indexOf("ArrayBuffer") > 0) {
+                        data = new Uint8Array(data);
+                    }
+
+                    stream = new Stream(data);
+                    setTimeout(doParse, 0);
+                };
+                h.onprogress = function (e) {
+                    if (e.lengthComputable) doShowProgress(e.loaded, e.total, true);
+                };
+                h.onerror = function() { doLoadError('xhr'); };
+                h.send();
+            },
+            load: function (callback) {
+                this.load_url(gif.getAttribute('rel:animated_src') || gif.src,callback);
+            },
+            load_raw: function(arr, callback) {
+                if (!load_setup(callback)) return;
+                if (!initialized) init();
+                stream = new Stream(arr);
+                setTimeout(doParse, 0);
+            },
+            set_frame_offset: setFrameOffset
+        };
+    };
+
+    return SuperGif;
+}));
+
+
+
 
 /***/ }),
 
@@ -33851,6 +34936,8 @@ var render = function () {
         ],
         1
       ),
+      _vm._v(" "),
+      _c("notifications", { attrs: { position: "bottom right" } }),
     ],
     1
   )
@@ -34257,6 +35344,1173 @@ function normalizeComponent (
   }
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-notification/dist/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/vue-notification/dist/index.js ***!
+  \*****************************************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"));
+	else {}
+})(this, function(__WEBPACK_EXTERNAL_MODULE_20__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __nested_webpack_require_629__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __nested_webpack_require_629__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__nested_webpack_require_629__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__nested_webpack_require_629__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__nested_webpack_require_629__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__nested_webpack_require_629__.d = function(exports, name, getter) {
+/******/ 		if(!__nested_webpack_require_629__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__nested_webpack_require_629__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__nested_webpack_require_629__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__nested_webpack_require_629__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__nested_webpack_require_629__.p = "/dist/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __nested_webpack_require_629__(__nested_webpack_require_629__.s = 2);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = Object.create(options.computed || null)
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+    options.computed = computed
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_4417__) {
+
+"use strict";
+/* harmony export (binding) */ __nested_webpack_require_4417__.d(__webpack_exports__, "a", function() { return events; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __nested_webpack_require_4417__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __nested_webpack_require_4417__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+
+var events = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({ name: 'vue-notification' });
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_4937__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Notifications_vue__ = __nested_webpack_require_4937__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default = __nested_webpack_require_4937__.n(__WEBPACK_IMPORTED_MODULE_0__Notifications_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__events__ = __nested_webpack_require_4937__(1);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+
+
+
+var Notify = {
+  install: function install(Vue) {
+    var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    if (this.installed) {
+      return;
+    }
+
+    this.installed = true;
+    this.params = args;
+
+    Vue.component(args.componentName || 'notifications', __WEBPACK_IMPORTED_MODULE_0__Notifications_vue___default.a);
+
+    var notify = function notify(params) {
+      if (typeof params === 'string') {
+        params = { title: '', text: params };
+      }
+
+      if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+        __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$emit('add', params);
+      }
+    };
+
+    notify.close = function (id) {
+      __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$emit('close', id);
+    };
+
+    var name = args.name || 'notify';
+
+    Vue.prototype['$' + name] = notify;
+    Vue[name] = notify;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Notify);
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __nested_webpack_require_6716__) {
+
+
+/* styles */
+__nested_webpack_require_6716__(17)
+
+var Component = __nested_webpack_require_6716__(0)(
+  /* script */
+  __nested_webpack_require_6716__(5),
+  /* template */
+  __nested_webpack_require_6716__(15),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'CssGroup',
+  props: ['name']
+});
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_7343__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index__ = __nested_webpack_require_7343__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__events__ = __nested_webpack_require_7343__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util__ = __nested_webpack_require_7343__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__defaults__ = __nested_webpack_require_7343__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue__ = __nested_webpack_require_7343__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue___default = __nested_webpack_require_7343__.n(__WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CssGroup_vue__ = __nested_webpack_require_7343__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CssGroup_vue___default = __nested_webpack_require_7343__.n(__WEBPACK_IMPORTED_MODULE_5__CssGroup_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__parser__ = __nested_webpack_require_7343__(8);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+
+var STATE = {
+  IDLE: 0,
+  DESTROYED: 2
+};
+
+var Component = {
+  name: 'Notifications',
+  components: {
+    VelocityGroup: __WEBPACK_IMPORTED_MODULE_4__VelocityGroup_vue___default.a,
+    CssGroup: __WEBPACK_IMPORTED_MODULE_5__CssGroup_vue___default.a
+  },
+  props: {
+    group: {
+      type: String,
+      default: ''
+    },
+
+    width: {
+      type: [Number, String],
+      default: 300
+    },
+
+    reverse: {
+      type: Boolean,
+      default: false
+    },
+
+    position: {
+      type: [String, Array],
+      default: function _default() {
+        return __WEBPACK_IMPORTED_MODULE_3__defaults__["a" /* default */].position;
+      }
+    },
+
+    classes: {
+      type: String,
+      default: 'vue-notification'
+    },
+
+    animationType: {
+      type: String,
+      default: 'css',
+      validator: function validator(value) {
+        return value === 'css' || value === 'velocity';
+      }
+    },
+
+    animation: {
+      type: Object,
+      default: function _default() {
+        return __WEBPACK_IMPORTED_MODULE_3__defaults__["a" /* default */].velocityAnimation;
+      }
+    },
+
+    animationName: {
+      type: String,
+      default: __WEBPACK_IMPORTED_MODULE_3__defaults__["a" /* default */].cssAnimation
+    },
+
+    speed: {
+      type: Number,
+      default: 300
+    },
+
+    cooldown: {
+      type: Number,
+      default: 0
+    },
+
+    duration: {
+      type: Number,
+      default: 3000
+    },
+
+    delay: {
+      type: Number,
+      default: 0
+    },
+
+    max: {
+      type: Number,
+      default: Infinity
+    },
+
+    ignoreDuplicates: {
+      type: Boolean,
+      default: false
+    },
+
+    closeOnClick: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data: function data() {
+    return {
+      list: [],
+      velocity: __WEBPACK_IMPORTED_MODULE_0__index__["default"].params.velocity
+    };
+  },
+  mounted: function mounted() {
+    __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$on('add', this.addItem);
+    __WEBPACK_IMPORTED_MODULE_1__events__["a" /* events */].$on('close', this.closeItem);
+  },
+
+  computed: {
+    actualWidth: function actualWidth() {
+      return __nested_webpack_require_7343__.i(__WEBPACK_IMPORTED_MODULE_6__parser__["a" /* default */])(this.width);
+    },
+    isVA: function isVA() {
+      return this.animationType === 'velocity';
+    },
+    componentName: function componentName() {
+      return this.isVA ? 'VelocityGroup' : 'CssGroup';
+    },
+    styles: function styles() {
+      var _listToDirection = __nested_webpack_require_7343__.i(__WEBPACK_IMPORTED_MODULE_2__util__["a" /* listToDirection */])(this.position),
+          x = _listToDirection.x,
+          y = _listToDirection.y;
+
+      var width = this.actualWidth.value;
+      var suffix = this.actualWidth.type;
+
+      var styles = _defineProperty({
+        width: width + suffix
+      }, y, '0px');
+
+      if (x === 'center') {
+        styles['left'] = 'calc(50% - ' + width / 2 + suffix + ')';
+      } else {
+        styles[x] = '0px';
+      }
+
+      return styles;
+    },
+    active: function active() {
+      return this.list.filter(function (v) {
+        return v.state !== STATE.DESTROYED;
+      });
+    },
+    botToTop: function botToTop() {
+      return this.styles.hasOwnProperty('bottom');
+    }
+  },
+  methods: {
+    destroyIfNecessary: function destroyIfNecessary(item) {
+      if (this.closeOnClick) {
+        this.destroy(item);
+      }
+    },
+    addItem: function addItem(event) {
+      var _this = this;
+
+      event.group = event.group || '';
+
+      if (this.group !== event.group) {
+        return;
+      }
+
+      if (event.clean || event.clear) {
+        this.destroyAll();
+        return;
+      }
+
+      var duration = typeof event.duration === 'number' ? event.duration : this.duration;
+
+      var speed = typeof event.speed === 'number' ? event.speed : this.speed;
+
+      var ignoreDuplicates = typeof event.ignoreDuplicates === 'boolean' ? event.ignoreDuplicates : this.ignoreDuplicates;
+
+      var title = event.title,
+          text = event.text,
+          type = event.type,
+          data = event.data,
+          id = event.id;
+
+
+      var item = {
+        id: id || __nested_webpack_require_7343__.i(__WEBPACK_IMPORTED_MODULE_2__util__["b" /* Id */])(),
+        title: title,
+        text: text,
+        type: type,
+        state: STATE.IDLE,
+        speed: speed,
+        length: duration + 2 * speed,
+        data: data
+      };
+
+      if (duration >= 0) {
+        item.timer = setTimeout(function () {
+          _this.destroy(item);
+        }, item.length);
+      }
+
+      var direction = this.reverse ? !this.botToTop : this.botToTop;
+
+      var indexToDestroy = -1;
+
+      var isDuplicate = this.active.some(function (item) {
+        return item.title === event.title && item.text === event.text;
+      });
+
+      var canAdd = ignoreDuplicates ? !isDuplicate : true;
+
+      if (!canAdd) return;
+
+      if (direction) {
+        this.list.push(item);
+
+        if (this.active.length > this.max) {
+          indexToDestroy = 0;
+        }
+      } else {
+        this.list.unshift(item);
+
+        if (this.active.length > this.max) {
+          indexToDestroy = this.active.length - 1;
+        }
+      }
+
+      if (indexToDestroy !== -1) {
+        this.destroy(this.active[indexToDestroy]);
+      }
+    },
+    closeItem: function closeItem(id) {
+      this.destroyById(id);
+    },
+    notifyClass: function notifyClass(item) {
+      return ['vue-notification-template', this.classes, item.type];
+    },
+    notifyWrapperStyle: function notifyWrapperStyle(item) {
+      return this.isVA ? null : { transition: 'all ' + item.speed + 'ms' };
+    },
+    destroy: function destroy(item) {
+      clearTimeout(item.timer);
+      item.state = STATE.DESTROYED;
+
+      if (!this.isVA) {
+        this.clean();
+      }
+    },
+    destroyById: function destroyById(id) {
+      var item = this.list.find(function (v) {
+        return v.id === id;
+      });
+
+      if (item) {
+        this.destroy(item);
+      }
+    },
+    destroyAll: function destroyAll() {
+      this.active.forEach(this.destroy);
+    },
+    getAnimation: function getAnimation(index, el) {
+      var animation = this.animation[index];
+
+      return typeof animation === 'function' ? animation.call(this, el) : animation;
+    },
+    enter: function enter(_ref) {
+      var el = _ref.el,
+          complete = _ref.complete;
+
+      var animation = this.getAnimation('enter', el);
+
+      this.velocity(el, animation, {
+        duration: this.speed,
+        complete: complete
+      });
+    },
+    leave: function leave(_ref2) {
+      var el = _ref2.el,
+          complete = _ref2.complete;
+
+      var animation = this.getAnimation('leave', el);
+
+      this.velocity(el, animation, {
+        duration: this.speed,
+        complete: complete
+      });
+    },
+    clean: function clean() {
+      this.list = this.list.filter(function (v) {
+        return v.state !== STATE.DESTROYED;
+      });
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Component);
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'VelocityGroup',
+  methods: {
+    enter: function enter(el, complete) {
+      this.$emit('enter', { el: el, complete: complete });
+    },
+    leave: function leave(el, complete) {
+      this.$emit('leave', { el: el, complete: complete });
+    },
+    afterLeave: function afterLeave() {
+      this.$emit('afterLeave');
+    }
+  }
+});
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  position: ['top', 'right'],
+  cssAnimation: 'vn-fade',
+  velocityAnimation: {
+    enter: function enter(el) {
+      var height = el.clientHeight;
+
+      return {
+        height: [height, 0],
+        opacity: [1, 0]
+      };
+    },
+    leave: {
+      height: 0,
+      opacity: [0, 1]
+    }
+  }
+});
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export parse */
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var floatRegexp = '[-+]?[0-9]*.?[0-9]+';
+
+var types = [{
+  name: 'px',
+  regexp: new RegExp('^' + floatRegexp + 'px$')
+}, {
+  name: '%',
+  regexp: new RegExp('^' + floatRegexp + '%$')
+}, {
+  name: 'px',
+  regexp: new RegExp('^' + floatRegexp + '$')
+}];
+
+var getType = function getType(value) {
+  if (value === 'auto') {
+    return {
+      type: value,
+      value: 0
+    };
+  }
+
+  for (var i = 0; i < types.length; i++) {
+    var type = types[i];
+    if (type.regexp.test(value)) {
+      return {
+        type: type.name,
+        value: parseFloat(value)
+      };
+    }
+  }
+
+  return {
+    type: '',
+    value: value
+  };
+};
+
+var parse = function parse(value) {
+  switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
+    case 'number':
+      return { type: 'px', value: value };
+    case 'string':
+      return getType(value);
+    default:
+      return { type: '', value: value };
+  }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (parse);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __nested_webpack_require_18050__) {
+
+"use strict";
+/* harmony export (binding) */ __nested_webpack_require_18050__.d(__webpack_exports__, "b", function() { return Id; });
+/* unused harmony export split */
+/* harmony export (binding) */ __nested_webpack_require_18050__.d(__webpack_exports__, "a", function() { return listToDirection; });
+var directions = {
+  x: ['left', 'center', 'right'],
+  y: ['top', 'bottom']
+};
+
+var Id = function (i) {
+  return function () {
+    return i++;
+  };
+}(0);
+
+var split = function split(value) {
+  if (typeof value !== 'string') {
+    return [];
+  }
+
+  return value.split(/\s+/gi).filter(function (v) {
+    return v;
+  });
+};
+
+var listToDirection = function listToDirection(value) {
+  if (typeof value === 'string') {
+    value = split(value);
+  }
+
+  var x = null;
+  var y = null;
+
+  value.forEach(function (v) {
+    if (directions.y.indexOf(v) !== -1) {
+      y = v;
+    }
+    if (directions.x.indexOf(v) !== -1) {
+      x = v;
+    }
+  });
+
+  return { x: x, y: y };
+};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __nested_webpack_require_19067__) {
+
+exports = module.exports = __nested_webpack_require_19067__(11)();
+// imports
+
+
+// module
+exports.push([module.i, ".vue-notification-group{display:block;position:fixed;z-index:5000}.vue-notification-wrapper{display:block;overflow:hidden;width:100%;margin:0;padding:0}.notification-title{font-weight:600}.vue-notification-template{background:#fff}.vue-notification,.vue-notification-template{display:block;box-sizing:border-box;text-align:left}.vue-notification{font-size:12px;padding:10px;margin:0 5px 5px;color:#fff;background:#44a4fc;border-left:5px solid #187fe7}.vue-notification.warn{background:#ffb648;border-left-color:#f48a06}.vue-notification.error{background:#e54d42;border-left-color:#b82e24}.vue-notification.success{background:#68cd86;border-left-color:#42a85f}.vn-fade-enter-active,.vn-fade-leave-active,.vn-fade-move{transition:all .5s}.vn-fade-enter,.vn-fade-leave-to{opacity:0}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __nested_webpack_require_21610__) {
+
+var Component = __nested_webpack_require_21610__(0)(
+  /* script */
+  __nested_webpack_require_21610__(4),
+  /* template */
+  __nested_webpack_require_21610__(16),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __nested_webpack_require_21901__) {
+
+var Component = __nested_webpack_require_21901__(0)(
+  /* script */
+  __nested_webpack_require_21901__(6),
+  /* template */
+  __nested_webpack_require_21901__(14),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('transition-group', {
+    attrs: {
+      "css": false
+    },
+    on: {
+      "enter": _vm.enter,
+      "leave": _vm.leave,
+      "after-leave": _vm.afterLeave
+    }
+  }, [_vm._t("default")], 2)
+},staticRenderFns: []}
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "vue-notification-group",
+    style: (_vm.styles)
+  }, [_c(_vm.componentName, {
+    tag: "component",
+    attrs: {
+      "name": _vm.animationName
+    },
+    on: {
+      "enter": _vm.enter,
+      "leave": _vm.leave,
+      "after-leave": _vm.clean
+    }
+  }, _vm._l((_vm.active), function(item) {
+    return _c('div', {
+      key: item.id,
+      staticClass: "vue-notification-wrapper",
+      style: (_vm.notifyWrapperStyle(item)),
+      attrs: {
+        "data-id": item.id
+      }
+    }, [_vm._t("body", [_c('div', {
+      class: _vm.notifyClass(item),
+      on: {
+        "click": function($event) {
+          return _vm.destroyIfNecessary(item)
+        }
+      }
+    }, [(item.title) ? _c('div', {
+      staticClass: "notification-title",
+      domProps: {
+        "innerHTML": _vm._s(item.title)
+      }
+    }) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "notification-content",
+      domProps: {
+        "innerHTML": _vm._s(item.text)
+      }
+    })])], {
+      "item": item,
+      "close": function () { return _vm.destroy(item); }
+    })], 2)
+  }), 0)], 1)
+},staticRenderFns: []}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('transition-group', {
+    attrs: {
+      "name": _vm.name
+    }
+  }, [_vm._t("default")], 2)
+},staticRenderFns: []}
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __nested_webpack_require_24150__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __nested_webpack_require_24150__(10);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __nested_webpack_require_24150__(18)("2901aeae", content, true);
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __nested_webpack_require_24567__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __nested_webpack_require_24567__(19)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_20__;
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 

@@ -19,7 +19,7 @@
 					window.APP_URL = "{{ env('APP_URL') }}";
 				</script>
 				<script src="{{ asset('js/jquery.js') }}"></script>
-				<script src="{{ asset('js/gifler.min.js') }}"></script>
+				{{-- <script src="{{ asset('js/gifler.min.js') }}"></script> --}}
 				<script src="{{ asset('js/app.js') }}" defer></script>
 				@yield('scripts')
     </head>

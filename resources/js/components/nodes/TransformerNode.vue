@@ -44,6 +44,12 @@ export default {
 			}
 		}
 	},
+	created() {
+		window.addEventListener('wheel', this.UpdateCloseButtonPosition);
+	},
+	destroyed() {
+		window.removeEventListener('wheel', this.UpdateCloseButtonPosition);
+	},
 	mounted() {
 		setTimeout(() => {
 			const transformer = this.konvaNode;
@@ -66,27 +72,27 @@ export default {
 			const scaleY = selectedNode.scaleY();
 			const rotation = selectedNode.rotation();
 
-			try {
-				axios.post(`/api/board/${typeId}/update/${uniqueId}`,
-				{
-					x: x,
-					y: y,
-					width: width,
-					height: height,
-					scaleX: scaleX,
-					scaleY: scaleY,
-					rotation: rotation,
-				},
-				{
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}).then((response) => {
-					console.log(response.data);
+			axios.post(`/api/board/${typeId}/update/${uniqueId}`,
+			{
+				x: x,
+				y: y,
+				width: width,
+				height: height,
+				scaleX: scaleX,
+				scaleY: scaleY,
+				rotation: rotation,
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).catch((error) => {
+				this.$notify({
+					title: `Обновление позиции: ${uniqueId}`,
+					text: `Не удалось обновить позицию элемента "${typeId}"`,
+					type: 'error'
 				});
-			} catch(ex) {
-				console.error(ex);
-			}
+			});
 		},
 		NodeRemove: async function() {
 			if (this.selectedNode == undefined) return;
@@ -140,8 +146,12 @@ export default {
 		UpdateCloseButtonPosition: function() {
 			const closeButton = this.$refs.closeButton.getNode();
 			const closeButtonText = this.$refs.closeButtonText.getNode();
-			const x = this.konvaNode.width() / 2;
-			const y = this.konvaNode.height() + closeButton.radius() + 15;
+			// const width = this.konvaNode.width() / this.konvaNode.scaleX();
+			// const heihgt = this.konvaNode.height() / this.konvaNode.scaleY();
+			const width = this.konvaNode.width();
+			const heihgt = this.konvaNode.height();
+			const x = width / 2;
+			const y = heihgt + closeButton.radius() + 15;
 
 			closeButton.x(x);
 			closeButton.y(y);
