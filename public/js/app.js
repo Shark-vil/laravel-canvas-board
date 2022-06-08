@@ -14730,13 +14730,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nbody {\n\toverflow-x: hidden;\n}\nbody::-webkit-scrollbar { \n\tdisplay: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nbody {\n\toverflow-x: hidden;\n}\nbody::-webkit-scrollbar { \n\tdisplay: none;\n}\n", "",{"version":3,"sources":["webpack://./resources/js/components/BoardComponent.vue"],"names":[],"mappings":";AA4KA;CACA,kBAAA;AACA;AAEA;CACA,aAAA;AACA","sourcesContent":["<template>\r\n\t<div @drop.prevent=\"DropFileHandler\" @dragenter.prevent @dragover.prevent>\r\n\t\t<board-tools />\r\n\t\t<board-zoom />\r\n\t\t<v-stage\r\n\t\t\tref=\"boardStage\"\r\n\t\t\t:config=\"boardStageConfig\"\r\n\t\t\t@dragend=\"DragEndHandler\"\r\n\t\t\t@dblclick=\"DoubleClickHandler\"\r\n\t\t\t@mousedown=\"MouseDownHandler\"\r\n\t\t\t@touchstart=\"TouchStartHandler\">\r\n\t\t\t<v-layer ref=\"boardStageLayer\">\r\n\t\t\t\t<board-text-bootstrap />\r\n\t\t\t\t<board-image-bootstrap />\r\n\r\n\t\t\t\t<board-transformer ref=\"transformer\" />\r\n\t\t\t</v-layer>\r\n\t\t</v-stage>\r\n\r\n\t\t<notifications position=\"bottom right\" />\r\n\t</div>\r\n</template>\r\n\r\n\r\n<script>\r\nimport Echo from 'laravel-echo';\r\nimport { ImageUploader } from './ImageUploader.js';\r\n\r\nexport default {\r\n\tcomputed: {\r\n\t\tkonvaStage() {\r\n\t\t\treturn this.$refs.boardStage.getStage();\r\n\t\t},\r\n\t\tkonvaStageLayer() {\r\n\t\t\treturn this.$refs.boardStageLayer.getNode();\r\n\t\t},\r\n\t\ttransformer() {\r\n\t\t\treturn this.$refs.transformer;\r\n\t\t},\r\n\t},\r\n\tdata() {\r\n\t\treturn {\r\n\t\t\tboardStageConfig: {\r\n\t\t\t\twidth: window.innerWidth,\r\n\t\t\t\theight: window.innerHeight,\r\n\t\t\t\tx: 0,\r\n\t\t\t\ty: 0,\r\n\t\t\t\tdraggable: true,\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\tcreated() {\r\n\t\tconst MIX_PUSHER_APP_BROADCASTER = process.env.MIX_PUSHER_APP_BROADCASTER;\r\n\t\tconst MIX_PUSHER_APP_KEY = process.env.MIX_PUSHER_APP_KEY;\r\n\t\tconst MIX_PUSHER_APP_CLUSTER = process.env.MIX_PUSHER_APP_CLUSTER;\r\n\t\tconst MIX_PUSHER_APP_ENCRYPTED = process.env.MIX_PUSHER_APP_ENCRYPTED;\r\n\t\tconst MIX_PUSHER_APP_WS_HOST = process.env.MIX_PUSHER_APP_WS_HOST;\r\n\t\tconst MIX_PUSHER_APP_WS_PATH = process.env.MIX_PUSHER_APP_WS_PATH;\r\n\t\tconst MIX_PUSHER_APP_WS_PORT = process.env.MIX_PUSHER_APP_WS_PORT;\r\n\t\tconst MIX_PUSHER_APP_WSS_PORT = process.env.MIX_PUSHER_APP_WSS_PORT;\r\n\t\tconst MIX_PUSHER_APP_FORCE_TLS = process.env.MIX_PUSHER_APP_FORCE_TLS;\r\n\t\tconst MIX_PUSHER_APP_DISABLE_STATS = process.env.MIX_PUSHER_APP_DISABLE_STATS;\r\n\r\n\t\twindow.Echo = new Echo({\r\n\t\t\tbroadcaster: MIX_PUSHER_APP_BROADCASTER != undefined ? MIX_PUSHER_APP_BROADCASTER : 'pusher',\r\n\t\t\tkey: MIX_PUSHER_APP_KEY,\r\n\t\t\tcluster: MIX_PUSHER_APP_CLUSTER,\r\n\t\t\tencrypted: MIX_PUSHER_APP_ENCRYPTED == 'true' ? true : false,\r\n\t\t\twsHost: MIX_PUSHER_APP_WS_HOST != undefined ? MIX_PUSHER_APP_WS_HOST : window.location.host,\r\n\t\t\twsPath: MIX_PUSHER_APP_WS_PATH,\r\n\t\t\twsPort: parseInt(MIX_PUSHER_APP_WS_PORT),\r\n\t\t\twssPort: parseInt(MIX_PUSHER_APP_WSS_PORT),\r\n\t\t\tforceTLS: MIX_PUSHER_APP_FORCE_TLS == 'true' ? true : false,\r\n\t\t\tdisableStats: MIX_PUSHER_APP_DISABLE_STATS == 'true' ? true : false,\r\n\t\t\tenabledTransports: ['ws', 'wss'],\r\n\t\t});\r\n\r\n\t\tVue.prototype.$boardInstance = this;\r\n\t},\r\n\tmounted() {\r\n\t\tVue.prototype.$konvaTransformer = this.transformer;\r\n\t\tthis.SetupScreenLocation();\r\n\r\n\t\twindow.Echo.join('board')\r\n\t\t\t.here((users) => {\r\n\t\t\t\tthis.$notify({\r\n\t\t\t\t\ttitle: 'С подключением',\r\n\t\t\t\t\ttext: 'Вы успешно подключились к серверу',\r\n\t\t\t\t\ttype: 'success'\r\n\t\t\t\t});\r\n\t\t\t})\r\n\t\t\t.joining((user) => {\r\n\t\t\t\tthis.$notify({\r\n\t\t\t\t\ttitle: 'Новый участник',\r\n\t\t\t\t\ttext: `${user.name} присоединился к доске`,\r\n\t\t\t\t\ttype: 'success'\r\n\t\t\t\t});\r\n\t\t\t})\r\n\t\t\t.leaving((user) => {\r\n\t\t\t\tthis.$notify({\r\n\t\t\t\t\ttitle: 'Участник отключился',\r\n\t\t\t\t\ttext: `${user.name} ушёл с доски`,\r\n\t\t\t\t\ttype: 'warn'\r\n\t\t\t\t});\r\n\t\t\t})\r\n\t\t\t.error((error) => {\r\n\t\t\t\tthis.$notify({\r\n\t\t\t\t\ttitle: 'Ошибка подключения',\r\n\t\t\t\t\ttext: error,\r\n\t\t\t\t\ttype: 'error'\r\n\t\t\t\t});\r\n\t\t\t});\r\n\t},\r\n\tmethods: {\r\n\t\tDragEndHandler: function(e) {\r\n\t\t\tthis.UpdateScreenLocation(e);\r\n    },\r\n\t\tTouchStartHandler: function(e) {\r\n\t\t\tthis.TransformerHandler(e);\r\n\t\t},\r\n\t\tMouseDownHandler: function(e) {\r\n\t\t\tthis.TransformerHandler(e);\r\n\t\t},\r\n\t\tTransformerHandler: function(e) {\r\n\t\t\tthis.transformer.StartTransformer(e);\r\n\t\t},\r\n\t\tDropFileHandler: function(e) {\r\n\t\t\tthis.UploadImage(e);\r\n\t\t},\r\n\t\tDoubleClickHandler: function(e) {\r\n\t\t\t// this.NodeRemove();\r\n\t\t},\r\n\t\t// NodeRemove: function() {\r\n\t\t// \tthis.transformer.NodeRemove();\r\n\t\t// },\r\n\t\tUploadImage: function(e) {\r\n\t\t\tconst file = e.dataTransfer.files[0];\r\n\t\t\tconst uploader = new ImageUploader(this.konvaStage);\r\n\t\t\tuploader.Upload(file, (response) => {\r\n\t\t\t\tthis.$notify({\r\n\t\t\t\t\ttitle: `Загрузка: ${file.name}`,\r\n\t\t\t\t\ttext: 'Файл загружкен',\r\n\t\t\t\t\ttype: 'success'\r\n\t\t\t\t});\r\n\t\t\t}, (error) => {\r\n\t\t\t\tthis.$notify({\r\n\t\t\t\t\ttitle: `Загрузка: ${file.name}`,\r\n\t\t\t\t\ttext: 'Ошибка загрузки файла',\r\n\t\t\t\t\ttype: 'error'\r\n\t\t\t\t});\r\n\t\t\t});\r\n\t\t},\r\n\t\tSetupScreenLocation: function() {\r\n\t\t\tlet urlHash = window.location.hash.replace('#', '');\r\n\t\t\tlet positions = urlHash.split(':');\r\n\r\n\t\t\tif (positions.length >= 2 && !isNaN(positions[0]) && !isNaN(positions[1])) {\r\n\t\t\t\tthis.boardStageConfig.x = parseInt(positions[0]);\r\n\t\t\t\tthis.boardStageConfig.y = parseInt(positions[1]);\r\n\t\t\t}\r\n\t\t},\r\n\t\tUpdateScreenLocation: function(e) {\r\n\t\t\tif (e.target != this.konvaStage) return;\r\n\t\t\tconst x = e.target.getX();\r\n\t\t\tconst y = e.target.getY();\r\n\t\t\twindow.location.hash =parseInt(x) + ':' + parseInt(y);\r\n\t\t}\r\n\t}\r\n}\r\n</script>\r\n\r\n<style>\r\n\tbody {\r\n\t\toverflow-x: hidden;\r\n\t}\r\n\r\n\tbody::-webkit-scrollbar { \r\n\t\tdisplay: none;\r\n\t}\r\n</style>"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14754,13 +14757,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/cssWithMappingToString.js */ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tools {\n\tposition: fixed;\n\tleft: 10;\n\theight: 50%;\n\ttop: calc(50% / 2);\n\tbackground-color: rgba(173, 173, 173, 0.7);\n\tborder-radius: 20px;\n\tz-index: 1;\n}\n.tools-open {\n\twidth: 120px;\n\ttransition: width .1s;\n}\n.tools-close {\n\twidth: 50px;\n\ttransition: width .15s;\n}\n.tools > div {\n\ttext-align: center;\n\twidth: 100%;\n\theight:100%;\n\toverflow-y: auto;\n}\n.tools > div::-webkit-scrollbar { \n\tdisplay: none;\n}\n.tools-open > div > a {\n\twidth: 100%;\n\tfont-size: 10pt;\n\tmargin-top: 5px;\n\tmargin-bottom: 5px;\n\tleft: auto;\n\tright: auto;\n\n\ttransition: width .5s;\n\ttransition: font-size .1s;\n}\n.tools-close > div > a {\n\twidth: 10%;\n\tfont-size: 0pt;\n\tmargin-top: 5px;\n\tmargin-bottom: 5px;\n\tleft: auto;\n\tright: auto;\n\n\ttransition: width .5s;\n\ttransition: font-size .1s;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tools {\n\tposition: fixed;\n\tleft: 10;\n\theight: 50%;\n\ttop: calc(50% / 2);\n\tbackground-color: rgba(173, 173, 173, 0.7);\n\tborder-radius: 20px;\n\tz-index: 1;\n}\n.tools-open {\n\twidth: 120px;\n\ttransition: width .1s;\n}\n.tools-close {\n\twidth: 50px;\n\ttransition: width .15s;\n}\n.tools > div {\n\ttext-align: center;\n\twidth: 100%;\n\theight:100%;\n\toverflow-y: auto;\n}\n.tools > div::-webkit-scrollbar { \n\tdisplay: none;\n}\n.tools-open > div > a {\n\twidth: 100%;\n\tfont-size: 10pt;\n\tmargin-top: 5px;\n\tmargin-bottom: 5px;\n\tleft: auto;\n\tright: auto;\n\n\ttransition: width .5s;\n\ttransition: font-size .1s;\n}\n.tools-close > div > a {\n\twidth: 10%;\n\tfont-size: 0pt;\n\tmargin-top: 5px;\n\tmargin-bottom: 5px;\n\tleft: auto;\n\tright: auto;\n\n\ttransition: width .5s;\n\ttransition: font-size .1s;\n}\n", "",{"version":3,"sources":["webpack://./resources/js/components/ToolsComponent.vue"],"names":[],"mappings":";AAiFA;CACA,eAAA;CACA,QAAA;CACA,WAAA;CACA,kBAAA;CACA,0CAAA;CACA,mBAAA;CACA,UAAA;AACA;AAEA;CACA,YAAA;CACA,qBAAA;AACA;AAEA;CACA,WAAA;CACA,sBAAA;AACA;AAEA;CACA,kBAAA;CACA,WAAA;CACA,WAAA;CACA,gBAAA;AACA;AAEA;CACA,aAAA;AACA;AAEA;CACA,WAAA;CACA,eAAA;CACA,eAAA;CACA,kBAAA;CACA,UAAA;CACA,WAAA;;CAEA,qBAAA;CACA,yBAAA;AACA;AAEA;CACA,UAAA;CACA,cAAA;CACA,eAAA;CACA,kBAAA;CACA,UAAA;CACA,WAAA;;CAEA,qBAAA;CACA,yBAAA;AACA","sourcesContent":["<template>\r\n\t<div\r\n\t\tclass=\"container-fluid\"\r\n\t\t@mouseover=\"handleMouseOver\"\r\n\t\t@mouseleave=\"handleMouseLeave\">\r\n\t\t<div\r\n\t\t\tclass=\"tools row parent\"\r\n\t\t\t:class=\"[hasFocusToolMenu ? 'tools-open' : 'tools-close']\">\r\n\t\t\t<div class=\"col-xs-12 col-sm-12 col-md-8\">\r\n\t\t\t\t<a @click=\"addNote\" class=\"btn btn-primary\">Заметка</a>\r\n\t\t\t\t<a @click=\"addText\" class=\"btn btn-primary\">Текст</a>\r\n\t\t\t\t<a @click=\"addArrow\" class=\"btn btn-primary\">Стрелка</a>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</template>\r\n\r\n<script>\r\nexport default {\r\n\tdata() {\r\n\t\treturn {\r\n\t\t\thasFocusToolMenu: false,\r\n\t\t}\r\n\t},\r\n\tmethods: {\r\n\t\taddNote() {\r\n\r\n\t\t},\r\n\t\taddText() {\r\n\t\t\tconst board = this.$boardInstance;\r\n\t\t\tconst konvaStage = board.konvaStage;\r\n\t\t\t\r\n\t\t\tlet posX = -konvaStage.getX();\r\n\t\t\tlet posY = -konvaStage.getY();\r\n\r\n\t\t\t// let scaleX = konvaStage.scaleX();\r\n\t\t\t// let scaleY = konvaStage.scaleY()\r\n\r\n\t\t\t// posX += (konvaStage.width() / scaleX) / 2;\r\n\t\t\t// posY += (konvaStage.height() / scaleY) / 2;\r\n\r\n\t\t\tposX += konvaStage.width() / 2;\r\n\t\t\tposY += konvaStage.height() / 2;\r\n\r\n\t\t\tconst width = 200;\r\n\r\n\t\t\tconst formData = new FormData();\r\n\t\t\tformData.append('text', 'Example text');\r\n\t\t\tformData.append('fontSize', 12);\r\n\t\t\tformData.append('x', posX - (width / 2));\r\n\t\t\tformData.append('y', posY);\r\n\t\t\tformData.append('scaleX', 1);\r\n\t\t\tformData.append('scaleY', 1);\r\n\t\t\tformData.append('width', width);\r\n\t\t\tformData.append('rotation', 0);\r\n\r\n\t\t\taxios.post('/api/board/text/add', formData,\r\n\t\t\t{\r\n\t\t\t\theaders: { 'Content-Type': 'multipart/form-data' }\r\n\t\t\t}).catch((error) => {\r\n\t\t\t\tthis.$notify({\r\n\t\t\t\t\ttitle: 'Не удалось добавить текст',\r\n\t\t\t\t\ttext: error,\r\n\t\t\t\t\ttype: 'error'\r\n\t\t\t\t});\r\n\t\t\t});\r\n\t\t},\r\n\t\taddArrow() {\r\n\r\n\t\t},\r\n\t\thandleMouseOver() {\r\n\t\t\tthis.hasFocusToolMenu = true;\r\n\t\t},\r\n\t\thandleMouseLeave() {\r\n\t\t\tthis.hasFocusToolMenu = false;\r\n\t\t}\r\n\t}\r\n}\r\n</script>\r\n\r\n<style>\r\n\t.tools {\r\n\t\tposition: fixed;\r\n\t\tleft: 10;\r\n\t\theight: 50%;\r\n\t\ttop: calc(50% / 2);\r\n\t\tbackground-color: rgba(173, 173, 173, 0.7);\r\n\t\tborder-radius: 20px;\r\n\t\tz-index: 1;\r\n\t}\r\n\r\n\t.tools-open {\r\n\t\twidth: 120px;\r\n\t\ttransition: width .1s;\r\n\t}\r\n\r\n\t.tools-close {\r\n\t\twidth: 50px;\r\n\t\ttransition: width .15s;\r\n\t}\r\n\t\r\n\t.tools > div {\r\n\t\ttext-align: center;\r\n\t\twidth: 100%;\r\n\t\theight:100%;\r\n\t\toverflow-y: auto; \r\n\t}\r\n\r\n\t.tools > div::-webkit-scrollbar { \r\n\t\tdisplay: none;\r\n\t}\r\n\r\n\t.tools-open > div > a {\r\n\t\twidth: 100%;\r\n\t\tfont-size: 10pt;\r\n\t\tmargin-top: 5px;\r\n\t\tmargin-bottom: 5px;\r\n\t\tleft: auto;\r\n\t\tright: auto;\r\n\r\n\t\ttransition: width .5s;\r\n\t\ttransition: font-size .1s;\r\n\t}\r\n\r\n\t.tools-close > div > a {\r\n\t\twidth: 10%;\r\n\t\tfont-size: 0pt;\r\n\t\tmargin-top: 5px;\r\n\t\tmargin-bottom: 5px;\r\n\t\tleft: auto;\r\n\t\tright: auto;\r\n\r\n\t\ttransition: width .5s;\r\n\t\ttransition: font-size .1s;\r\n\t}\r\n</style>"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14839,6 +14845,52 @@ module.exports = function (cssWithMappingToString) {
   };
 
   return list;
+};
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/cssWithMappingToString.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/cssWithMappingToString.js ***!
+  \************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+module.exports = function cssWithMappingToString(item) {
+  var _item = _slicedToArray(item, 4),
+      content = _item[1],
+      cssMapping = _item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (typeof btoa === "function") {
+    // eslint-disable-next-line no-undef
+    var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
+    var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+    var sourceMapping = "/*# ".concat(data, " */");
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || "").concat(source, " */");
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join("\n");
+  }
+
+  return [content].join("\n");
 };
 
 /***/ }),
@@ -66710,3 +66762,4 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	
 /******/ })()
 ;
+//# sourceMappingURL=app.js.map

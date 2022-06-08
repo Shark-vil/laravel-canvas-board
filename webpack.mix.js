@@ -20,4 +20,6 @@ const mix = require('laravel-mix');
 		require('autoprefixer'),
 	])
 	.js('resources/js/jquery.js', 'public/js')
-	.copy('resources/dist/js/gifler.min.js', 'public/js');
+	.copy('resources/dist/js/gifler.min.js', 'public/js')
+	.sourceMaps()
+	.webpackConfig({devtool: 'source-map'});

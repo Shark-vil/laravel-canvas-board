@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/jquery.js": "/js/jquery.js",
     "/css/app.css": "/css/app.css",
-    "/js/gifler.min.js": "/js/gifler.min.js"
+    "/js/app.js.map": "/js/app.js.map",
+    "/js/gifler.min.js": "/js/gifler.min.js",
+    "/js/jquery.js.map": "/js/jquery.js.map"
 }
