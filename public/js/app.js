@@ -8179,6 +8179,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 /* harmony import */ var _ImageUploader_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ImageUploader.js */ "./resources/js/components/ImageUploader.js");
+/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 //
 //
 //
@@ -8229,14 +8230,28 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    var MIX_PUSHER_APP_BROADCASTER = "pusher";
+    var MIX_PUSHER_APP_KEY = "local";
+    var MIX_PUSHER_APP_CLUSTER = "mt1";
+    var MIX_PUSHER_APP_ENCRYPTED = "true";
+    var MIX_PUSHER_APP_WS_HOST = "canvasboard.localhost";
+    var MIX_PUSHER_APP_WS_PATH = process.env.MIX_PUSHER_APP_WS_PATH;
+    var MIX_PUSHER_APP_WS_PORT = "6001";
+    var MIX_PUSHER_APP_WSS_PORT = "6001";
+    var MIX_PUSHER_APP_FORCE_TLS = "false";
+    var MIX_PUSHER_APP_DISABLE_STATS = "true";
     window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
-      broadcaster: "pusher",
-      key: "CanvasBoard",
-      cluster: "mt1",
-      wsHost: "canvasboard.localhost",
-      wsPort: parseInt("6001"),
-      forceTLS:  false ? 0 : false,
-      disableStats:  true ? true : 0
+      broadcaster: MIX_PUSHER_APP_BROADCASTER != undefined ? MIX_PUSHER_APP_BROADCASTER : 'pusher',
+      key: MIX_PUSHER_APP_KEY,
+      cluster: MIX_PUSHER_APP_CLUSTER,
+      encrypted: MIX_PUSHER_APP_ENCRYPTED == 'true' ? true : false,
+      wsHost: MIX_PUSHER_APP_WS_HOST != undefined ? MIX_PUSHER_APP_WS_HOST : window.location.host,
+      wsPath: MIX_PUSHER_APP_WS_PATH,
+      wsPort: parseInt(MIX_PUSHER_APP_WS_PORT),
+      wssPort: parseInt(MIX_PUSHER_APP_WSS_PORT),
+      forceTLS: MIX_PUSHER_APP_FORCE_TLS == 'true' ? true : false,
+      disableStats: MIX_PUSHER_APP_DISABLE_STATS == 'true' ? true : false,
+      enabledTransports: ['ws', 'wss']
     });
     Vue.prototype.$boardInstance = this;
   },

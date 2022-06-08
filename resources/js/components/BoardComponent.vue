@@ -50,14 +50,29 @@ export default {
 		}
 	},
 	created() {
+		const MIX_PUSHER_APP_BROADCASTER = process.env.MIX_PUSHER_APP_BROADCASTER;
+		const MIX_PUSHER_APP_KEY = process.env.MIX_PUSHER_APP_KEY;
+		const MIX_PUSHER_APP_CLUSTER = process.env.MIX_PUSHER_APP_CLUSTER;
+		const MIX_PUSHER_APP_ENCRYPTED = process.env.MIX_PUSHER_APP_ENCRYPTED;
+		const MIX_PUSHER_APP_WS_HOST = process.env.MIX_PUSHER_APP_WS_HOST;
+		const MIX_PUSHER_APP_WS_PATH = process.env.MIX_PUSHER_APP_WS_PATH;
+		const MIX_PUSHER_APP_WS_PORT = process.env.MIX_PUSHER_APP_WS_PORT;
+		const MIX_PUSHER_APP_WSS_PORT = process.env.MIX_PUSHER_APP_WSS_PORT;
+		const MIX_PUSHER_APP_FORCE_TLS = process.env.MIX_PUSHER_APP_FORCE_TLS;
+		const MIX_PUSHER_APP_DISABLE_STATS = process.env.MIX_PUSHER_APP_DISABLE_STATS;
+
 		window.Echo = new Echo({
-			broadcaster: process.env.MIX_PUSHER_APP_BROADCASTER,
-			key: process.env.MIX_PUSHER_APP_KEY,
-			cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-			wsHost: process.env.MIX_PUSHER_APP_WS_HOST,
-			wsPort: parseInt(process.env.MIX_PUSHER_APP_WS_PORT),
-			forceTLS: process.env.MIX_PUSHER_APP_FORCE_TLS == 'true' ? true : false,
-			disableStats: process.env.MIX_PUSHER_APP_DISABLE_STATS == 'true' ? true : false,
+			broadcaster: MIX_PUSHER_APP_BROADCASTER != undefined ? MIX_PUSHER_APP_BROADCASTER : 'pusher',
+			key: MIX_PUSHER_APP_KEY,
+			cluster: MIX_PUSHER_APP_CLUSTER,
+			encrypted: MIX_PUSHER_APP_ENCRYPTED == 'true' ? true : false,
+			wsHost: MIX_PUSHER_APP_WS_HOST != undefined ? MIX_PUSHER_APP_WS_HOST : window.location.host,
+			wsPath: MIX_PUSHER_APP_WS_PATH,
+			wsPort: parseInt(MIX_PUSHER_APP_WS_PORT),
+			wssPort: parseInt(MIX_PUSHER_APP_WSS_PORT),
+			forceTLS: MIX_PUSHER_APP_FORCE_TLS == 'true' ? true : false,
+			disableStats: MIX_PUSHER_APP_DISABLE_STATS == 'true' ? true : false,
+			enabledTransports: ['ws', 'wss'],
 		});
 
 		Vue.prototype.$boardInstance = this;
