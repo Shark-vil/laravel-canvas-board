@@ -31,3 +31,8 @@ LARAVEL_WEBSOCKETS_PORT=2053
 ## Demo site
 
 [Go to board](https://board.vincy.ru)
+
+**User test data:**
+
+Login: guest@demo.com
+Password: guestdemo
