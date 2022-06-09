@@ -22,6 +22,7 @@
 **Пример (.env)**:
 
 LARAVEL_WEBSOCKETS_HOST=127.0.0.1
+
 LARAVEL_WEBSOCKETS_PORT=2053
 
 # Демонстрация
