@@ -171,7 +171,7 @@ export default {
 
 <style>
 	body {
-		overflow-x: hidden;
+		overflow: hidden;
 	}
 
 	body::-webkit-scrollbar { 

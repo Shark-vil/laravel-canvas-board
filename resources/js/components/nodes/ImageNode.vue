@@ -62,18 +62,18 @@ export default {
 			const imageAddress = window.APP_URL + '/storage' + this.url;
 			const extension = imageAddress.split('.').pop();
 			const image = new window.Image();
-			let cacheImageElement = document.body.appendChild(image);
 
 			image.onload = () => {
 				if (extension == 'gif') {
+					document.body.appendChild(image);
 					this.GifLoader(image);
-					cacheImageElement.remove();
 				} else {
 					this.nodeConfig.image = image;
 				}
 			};
 
 			image.src = imageAddress;
+			image.style.visibility = "hidden";
 		}
 	},
 	methods: {
@@ -118,6 +118,7 @@ export default {
 			gif.load();
 
 			const gif_canvas = gif.get_canvas();
+			const div_root = gif_canvas.parentNode;
 			const canvas = gif_canvas.cloneNode();
 			const ctx = canvas.getContext('2d');
 
@@ -132,6 +133,12 @@ export default {
 			};
 
 			anim();
+
+			try {
+				document.body.removeChild(div_root);
+			} catch(e) {
+				console.error(e);
+			}
 		},
 	}
 }
