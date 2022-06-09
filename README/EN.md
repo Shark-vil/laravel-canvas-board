@@ -35,4 +35,5 @@ LARAVEL_WEBSOCKETS_PORT=2053
 **User test data:**
 
 Login: guest@demo.com
+
 Password: guestdemo

@@ -38,4 +38,5 @@ LARAVEL_WEBSOCKETS_PORT=2053
 **Тестовые данные пользователя:**
 
 Логин: guest@demo.com
+
 Пароль: guestdemo
