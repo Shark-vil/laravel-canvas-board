@@ -18,7 +18,7 @@ For the socket server to work, it is recommended to use these ports if your site
 
 **Example (.env)**:
 
-LARAVEL_WEBSOCKETS_HOST=127.0.0.1
+LARAVEL_WEBSOCKETS_HOST=0.0.0.0
 
 LARAVEL_WEBSOCKETS_PORT=2053
 
