@@ -12,6 +12,8 @@ Web sockets were used to synchronize actions between clients.
 
 - Placing images on the canvas via drag and drop
 - Placing text on the canvas via the tools menu
+- Paint with a brush
+- An eraser to clean the canvas
 
 ## CloudFlare
 
