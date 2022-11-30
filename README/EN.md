@@ -8,6 +8,11 @@ Web application for collaboration on a single board in real time.
 
 Web sockets were used to synchronize actions between clients.
 
+# Functionality currently available
+
+- Placing images on the canvas via drag and drop
+- Placing text on the canvas via the tools menu
+
 ## CloudFlare
 
 For the socket server to work, it is recommended to use these ports if your site is bound to "DNS CloudFlare":
