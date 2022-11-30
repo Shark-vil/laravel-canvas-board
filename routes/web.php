@@ -67,6 +67,27 @@ Route::middleware(['auth'])->group(function () {
 		'/board/text/get/{id?}',
 		'App\Http\Controllers\Api\Board\TextController@get'
 	);
+
+	// API: Paint
+	Route::prefix('api')->post(
+		'/board/paint/add',
+		'App\Http\Controllers\Api\Board\PaintController@add'
+	);
+
+	Route::prefix('api')->post(
+		'/board/paint/delete/{id}',
+		'App\Http\Controllers\Api\Board\PaintController@delete'
+	);
+
+	Route::prefix('api')->post(
+		'/board/paint/update/{id}',
+		'App\Http\Controllers\Api\Board\PaintController@update'
+	);
+	
+	Route::prefix('api')->get(
+		'/board/paint/get/{id?}',
+		'App\Http\Controllers\Api\Board\PaintController@get'
+	);
 });
 
 require __DIR__ . '/auth.php';

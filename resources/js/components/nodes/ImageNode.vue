@@ -73,6 +73,7 @@ export default {
 			};
 
 			image.src = imageAddress;
+			image.hidden = true;
 			image.style.visibility = "hidden";
 		}
 	},
@@ -85,7 +86,7 @@ export default {
 			konvaNode.scaleY(entry.scaleY);
 			konvaNode.rotation(entry.rotation);
 		},
-		Delete: async function() {
+		Delete: async function(qsilentErrors = false) {
 			await axios.post('/api/board/image/delete/' + this.id).then(response => {
 				this.$notify({
 					title: `Удаление картинки: ${this.id}`,
@@ -93,11 +94,14 @@ export default {
 					type: 'success'
 				});
 			}).catch((error) => {
-				this.$notify({
-					title: `Удаление картинки: ${this.id}`,
-					text: 'Не удалось удалить картинку',
-					type: 'error'
-				});
+				if (!qsilentErrors)
+					this.$notify({
+						title: `Удаление картинки: ${this.id}`,
+						text: 'Не удалось удалить картинку',
+						type: 'error'
+					});
+
+				console.error(error);
 			});
 		},
 		GifLoader: function(templateImage) {

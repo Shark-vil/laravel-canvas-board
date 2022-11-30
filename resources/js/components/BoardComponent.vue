@@ -1,22 +1,27 @@
 <template>
-	<div @drop.prevent="DropFileHandler" @dragenter.prevent @dragover.prevent>
-		<board-tools />
+	<div
+		@drop.prevent="DropFileHandler"
+		@dragenter.prevent
+		@dragover.prevent>
+		<board-tools ref="boardTools" @selecttool="SelectToolHandler" />
 		<board-zoom />
 		<v-stage
 			ref="boardStage"
 			:config="boardStageConfig"
 			@dragend="DragEndHandler"
 			@dblclick="DoubleClickHandler"
+			@mouseup="MouseUpHandler"
+			@mousemove="MouseMoveHandler"
 			@mousedown="MouseDownHandler"
 			@touchstart="TouchStartHandler">
 			<v-layer ref="boardStageLayer">
 				<board-text-bootstrap />
 				<board-image-bootstrap />
+				<board-paint-bootstrap ref="paintBootstrap" />
 
 				<board-transformer ref="transformer" />
 			</v-layer>
 		</v-stage>
-
 		<notifications position="bottom right" />
 	</div>
 </template>
@@ -40,12 +45,17 @@ export default {
 	},
 	data() {
 		return {
+			eraser: false,
+			eraserHasDown: false,
+			eraserHasRemoved: false,
 			boardStageConfig: {
 				width: window.innerWidth,
 				height: window.innerHeight,
 				x: 0,
 				y: 0,
 				draggable: true,
+				toolName: undefined,
+				oldToolName: undefined,
 			}
 		}
 	},
@@ -112,14 +122,142 @@ export default {
 			});
 	},
 	methods: {
+		GetAddNewElementForm: function() {
+			const stagePosition = this.konvaStage.getRelativePointerPosition();
+
+			let posX =  stagePosition.x;
+			let posY = stagePosition.y;
+			let scaleX = 1;
+			let scaleY = 1;
+
+			const formData = new FormData();
+			formData.append('x', posX);
+			formData.append('y', posY);
+			formData.append('scaleX', scaleX);
+			formData.append('scaleY', scaleY);
+			formData.append('rotation', 0);
+
+			return formData;
+		},
+		SelectToolActions: function(selectType = undefined) {
+			let formData = undefined;
+			let elementName = undefined;
+			let sendUrl = undefined;
+
+			switch (this.toolName) {
+				case 'eraser':
+					this.eraser = true;
+					this.transformer.StopTransform();
+					this.boardStageConfig.draggable = false;
+					this.konvaStage.container().style.cursor = 'not-allowed';
+				break;
+
+				case 'text':
+					if (selectType == 'drag') {
+						elementName = 'текст';
+						sendUrl = '/api/board/text/add';
+						formData = this.GetAddNewElementForm();
+						formData.append('text', 'Example text');
+						formData.append('fontSize', 12);
+						formData.append('width', 200);
+						this.toolName = undefined;
+						this.konvaStage.container().style.cursor = 'default';
+					} else {
+						this.konvaStage.container().style.cursor = 'grab';
+					}
+				break;
+
+				case 'paint':
+					if (!this.$refs.paintBootstrap.hasPaint) {
+						this.boardStageConfig.draggable = false;
+						this.konvaStage.container().style.cursor = 'crosshair';
+					}
+					break;
+
+				case undefined:
+					this.boardStageConfig.draggable = true;
+					this.eraser = false;
+					this.konvaStage.container().style.cursor = 'default';
+					break;
+			
+				default:
+					break;
+			}
+
+			if (formData != undefined && sendUrl != undefined) {
+				axios.post(sendUrl, formData,
+				{
+					headers: { 'Content-Type': 'multipart/form-data' }
+				}).catch((error) => {
+					this.$notify({
+						title: `Не удалось добавить ${elementName}`,
+						text: error,
+						type: 'error'
+					});
+				});
+			}
+		},
+		SelectToolHandler: function(toolName) {
+			this.oldToolName = this.toolName;
+			this.toolName = toolName;
+			this.SelectToolActions();
+		},
 		DragEndHandler: function(e) {
 			this.UpdateScreenLocation(e);
     },
 		TouchStartHandler: function(e) {
 			this.TransformerHandler(e);
 		},
+		MouseUpHandler: function(e) {
+			if (this.eraser) {
+				this.eraserHasDown = false;
+				return;
+			}
+
+			this.$refs.paintBootstrap.MouseUpHandler(e);
+			this.SelectToolActions('drag');
+
+			if (this.toolName == 'paint') {
+				this.$refs.paintBootstrap.StopPaint();
+				this.boardStageConfig.draggable = true;
+			}
+		},
+		MouseMoveHandler: async function(e) {
+			if (this.eraser) {
+				if (this.eraserHasDown && !this.eraserHasRemoved && e.target !== e.target.getStage()) {
+					const shapeName = e.target.name();
+					const selectedNode = this.konvaStage.findOne(`.${shapeName}`);
+
+					if (selectedNode) {
+						try {
+							if (selectedNode.GetVueComponent != undefined) {
+								const component = selectedNode.GetVueComponent()
+								if (!this.eraserHasRemoved && typeof component.Delete == 'function') {
+									this.eraserHasRemoved = true;
+									await component.Delete();
+									this.eraserHasRemoved = false;
+								}
+							}
+						} catch { }
+					}
+				}
+				return;
+			}
+			this.$refs.paintBootstrap.MouseMoveHandler(e);
+		},
 		MouseDownHandler: function(e) {
+			if (this.eraser) {
+				this.eraserHasDown = true;
+				return;
+			}
+
+			if (this.toolName == 'paint') {
+				this.boardStageConfig.draggable = false;
+				this.$refs.paintBootstrap.StartPaint();
+			}
+
 			this.TransformerHandler(e);
+			this.$refs.paintBootstrap.MouseDownHandler(e);
 		},
 		TransformerHandler: function(e) {
 			this.transformer.StartTransformer(e);

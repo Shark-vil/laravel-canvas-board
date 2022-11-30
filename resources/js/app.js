@@ -50,6 +50,8 @@ Vue.component('board-text', require('./components/nodes/TextNode.vue').default);
 Vue.component('board-text-bootstrap', require('./components/bootstrap/TextNodeBootstrap.vue').default);
 Vue.component('board-image', require('./components/nodes/ImageNode.vue').default);
 Vue.component('board-image-bootstrap', require('./components/bootstrap/ImageNodeBootstrap.vue').default);
+Vue.component('board-paint', require('./components/nodes/PaintNode.vue').default);
+Vue.component('board-paint-bootstrap', require('./components/bootstrap/PaintNodeBootstrap.vue').default);
 Vue.component('board-transformer', require('./components/nodes/TransformerNode.vue').default);
 // Vue.component('board-image', require('./components/ImageComponent.vue').default);
 // Vue.component('board-image-loader', require('./components/ImagesLoaderComponent.vue').default);

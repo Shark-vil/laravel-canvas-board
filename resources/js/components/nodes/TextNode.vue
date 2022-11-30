@@ -78,8 +78,8 @@ export default {
 			konvaNode.scaleY(entry.scaleY);
 			konvaNode.rotation(entry.rotation);
 		},
-		DbUpdate: function(text) {
-			axios.post('/api/board/text/update/' + this.id, { text: text },
+		DbUpdate: async function(text) {
+			await axios.post('/api/board/text/update/' + this.id, { text: text },
 			{
 				headers: { 'Content-Type': 'application/json' }
 			}).catch((error) => {
@@ -90,7 +90,7 @@ export default {
 				});
 			});
 		},
-		Delete: async function() {
+		Delete: async function(qsilentErrors = false) {
 			await axios.post('/api/board/text/delete/' + this.id).then(response => {
 				this.$notify({
 					title: `Удаление текста: ${this.id}`,
@@ -98,11 +98,14 @@ export default {
 					type: 'success'
 				});
 			}).catch((error) => {
-				this.$notify({
-					title: `Удаление текста: ${this.id}`,
-					text: 'Не удалось удалить текст',
-					type: 'error'
-				});
+				if (!qsilentErrors)
+					this.$notify({
+						title: `Удаление текста: ${this.id}`,
+						text: 'Не удалось удалить текст',
+						type: 'error'
+					});
+
+				console.error(error);
 			});
 		},
 		EditMode: function () {
@@ -152,10 +155,10 @@ export default {
 				textarea.style.height = textarea.scrollHeight + textNode.fontSize() + 'px';
 			});
 
-			let handleOutsideClick = function(e) {
+			let handleOutsideClick = async function(e) {
 				if (e.target !== textarea) {
 					textNode.text(textarea.value);
-					DbUpdate(textarea.value);
+					await DbUpdate(textarea.value);
 					removeTextarea();
 				}
 			}

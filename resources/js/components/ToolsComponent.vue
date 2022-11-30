@@ -7,9 +7,11 @@
 			class="tools row parent"
 			:class="[hasFocusToolMenu ? 'tools-open' : 'tools-close']">
 			<div class="col-xs-12 col-sm-12 col-md-8">
-				<a @click="addNote" class="btn btn-primary">Заметка</a>
-				<a @click="addText" class="btn btn-primary">Текст</a>
-				<a @click="addArrow" class="btn btn-primary">Стрелка</a>
+				<a @mousedown="addEraser" v-bind:class="getButtonClass('eraser')">Ластик</a>
+				<a @mousedown="addPaint" v-bind:class="getButtonClass('paint')">Кисть</a>
+				<!-- <a @mousedown="addNote" v-bind:class="getButtonClass('note')">Заметка</a> -->
+				<a @mousedown="addText" v-bind:class="getButtonClass('text')">Текст</a>
+				<!-- <a @mousedown="addArrow" v-bind:class="getButtonClass('arrow')">Стрелка</a> -->
 			</div>
 		</div>
 	</div>
@@ -20,53 +22,42 @@ export default {
 	data() {
 		return {
 			hasFocusToolMenu: false,
+			currentTool: undefined,
 		}
 	},
 	methods: {
-		addNote() {
+		getButtonClass(toolName) {
+			return this.currentTool != toolName ? 'btn btn-primary' : 'btn btn-success';
+		},
+		resetTool() {
+			this.currentToo = undefined;
+			this.$emit('selecttool', this.currentTool);
+		},
+		selectTool(toolName, hold = false)  {
+			if (this.currentTool == toolName)
+				this.currentTool = undefined;
+			else
+				this.currentTool = toolName;
 
+			this.$emit('selecttool', this.currentTool);
+
+			if (!hold)
+				this.currentTool = undefined;
+		},
+		addEraser() {
+			this.selectTool('eraser', true);
+		},
+		addNote() {
+			this.selectTool('note');
+		},
+		addPaint() {
+			this.selectTool('paint', true);
 		},
 		addText() {
-			const board = this.$boardInstance;
-			const konvaStage = board.konvaStage;
-			
-			let posX = -konvaStage.getX();
-			let posY = -konvaStage.getY();
-
-			// let scaleX = konvaStage.scaleX();
-			// let scaleY = konvaStage.scaleY()
-
-			// posX += (konvaStage.width() / scaleX) / 2;
-			// posY += (konvaStage.height() / scaleY) / 2;
-
-			posX += konvaStage.width() / 2;
-			posY += konvaStage.height() / 2;
-
-			const width = 200;
-
-			const formData = new FormData();
-			formData.append('text', 'Example text');
-			formData.append('fontSize', 12);
-			formData.append('x', posX - (width / 2));
-			formData.append('y', posY);
-			formData.append('scaleX', 1);
-			formData.append('scaleY', 1);
-			formData.append('width', width);
-			formData.append('rotation', 0);
-
-			axios.post('/api/board/text/add', formData,
-			{
-				headers: { 'Content-Type': 'multipart/form-data' }
-			}).catch((error) => {
-				this.$notify({
-					title: 'Не удалось добавить текст',
-					text: error,
-					type: 'error'
-				});
-			});
+			this.selectTool('text');
 		},
 		addArrow() {
-
+			this.selectTool('arrow');
 		},
 		handleMouseOver() {
 			this.hasFocusToolMenu = true;

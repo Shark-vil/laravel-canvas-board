@@ -20,7 +20,13 @@
 				</script>
 				<script src="{{ asset('js/jquery.js') }}"></script>
 				{{-- <script src="{{ asset('js/gifler.min.js') }}"></script> --}}
-				<script src="{{ asset('js/app.js') }}" defer></script>
+
+				@if (env('APP_DEBUG') == true)
+					<script src="{{ asset('js/app.js') }}?t={{ time() }}" defer></script>
+				@else
+					<script src="{{ asset('js/app.js') }}" defer></script>
+				@endif
+
 				@yield('scripts')
     </head>
     <body class="font-sans antialiased">
